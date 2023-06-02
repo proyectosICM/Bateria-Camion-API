@@ -13,17 +13,17 @@ public class DetallesCamionesModel {
     @Column(unique = true, nullable = false)
     private Long id_dc;
 
-    @ManyToOne
-    @JoinColumn(name = "cam_id" , referencedColumnName = "id_cam", nullable = false)
-    private CamionesModel camionesModel;
-
     @Temporal(TemporalType.DATE)
     private Date dia;
 
     @Temporal(TemporalType.TIME)
     private Time hora;
+
+    @ManyToOne
+    @JoinColumn(name = "bat_id", referencedColumnName = "id_bat", nullable = false)
+    private BateriasModels bateriasModels;
     private Double voltaje;
-    private Integer bateria;
+    private Integer carga;
     private Double temperatura;
     private Boolean est_dc;
 
