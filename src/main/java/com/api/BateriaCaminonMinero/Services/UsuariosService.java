@@ -32,6 +32,7 @@ public class UsuariosService {
             usuario.setUser_usu(usuariosModel.getUser_usu());
             usuario.setPass_usu(usuario.getPass_usu());
             usuario.setEst_usu(usuario.getEst_usu());
+            usuario.setRolesModel(usuariosModel.getRolesModel());
             return usuarioRepository.save(usuario);
         } else {
             return null;
