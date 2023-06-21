@@ -34,7 +34,7 @@ public class TrabajadoresService {
             trabajadores.setApe_tra(trabajadoresModel.getApe_tra());
             trabajadores.setDni_tra(trabajadores.getDni_tra());
             trabajadores.setEst_tra(trabajadoresModel.getEst_tra());
-            trabajadores.setUsuariosModel(trabajadoresModel.getUsuariosModel());
+            //trabajadores.setUsuariosModel(trabajadoresModel.getUsuariosModel());
             trabajadores.setEmpresasModel(trabajadoresModel.getEmpresasModel());
             return trabajadoresRepository.save(trabajadores);
         } else {
