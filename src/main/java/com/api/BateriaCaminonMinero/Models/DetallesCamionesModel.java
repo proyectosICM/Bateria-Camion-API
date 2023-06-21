@@ -1,10 +1,15 @@
 package com.api.BateriaCaminonMinero.Models;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.sql.Time;
 import java.util.Date;
-
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "DetalleCamiones")
 public class DetallesCamionesModel {

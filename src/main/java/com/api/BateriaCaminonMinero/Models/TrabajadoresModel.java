@@ -1,10 +1,15 @@
 package com.api.BateriaCaminonMinero.Models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.util.List;
-
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "Trabajadores")
 public class TrabajadoresModel {
@@ -22,10 +27,4 @@ public class TrabajadoresModel {
     @JoinColumn(name = "empresa_id", referencedColumnName = "id_emp", nullable = false)
     private  EmpresasModel empresasModel;
 
-/*
-    @OneToOne
-    @JoinColumn(name="usuario_id", referencedColumnName = "id_usu", nullable = false)
-    private UsuariosModel usuariosModel;
-
-*/
 }
