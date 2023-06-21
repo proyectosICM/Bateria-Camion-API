@@ -24,7 +24,10 @@ public class EmpresasController {
     @GetMapping("/{id}")
     public ResponseEntity<EmpresasModel> GetByIdE(@PathVariable Long id){
         Optional<EmpresasModel> empresa = empresasService.ListarEmpresaId(id);
-        return new ResponseEntity<>(empresa.get(), HttpStatus.OK);
+        if (empresa.isPresent()){
+            return new ResponseEntity<>(empresa.get(), HttpStatus.OK);
+        }
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @PostMapping

@@ -24,7 +24,10 @@ public class TrabajadoresController {
     @GetMapping("/{id}")
     public ResponseEntity<TrabajadoresModel> GetTById(@PathVariable Long id){
         Optional<TrabajadoresModel> trabajador = trabajadoresService.ListarTrabajadorId(id);
-        return new ResponseEntity<>(trabajador.get(), HttpStatus.OK);
+        if (trabajador.isPresent()){
+            return new ResponseEntity<>(trabajador.get(), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @PostMapping

@@ -11,8 +11,8 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "DetalleCamiones")
-public class DetallesCamionesModel {
+@Table(name = "Detalle_Baterias")
+public class DetalleBateriasModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, nullable = false)
