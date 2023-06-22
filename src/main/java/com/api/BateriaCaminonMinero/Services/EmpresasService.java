@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.swing.text.html.Option;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,6 +17,19 @@ public class EmpresasService {
 
     public List<EmpresasModel> ListarEmpresas(){
         return empresasRepository.findAll();
+    }
+    public List<EmpresasModel> ListarEmpresasH(boolean est){
+        List<Object[]> resultados = empresasRepository.ListarEmpresasH(est);
+        List<EmpresasModel> empresasDList = new ArrayList<>();
+
+        for (Object[] resultado : resultados){
+            EmpresasModel empresasmd = new EmpresasModel();
+            empresasmd.setId_emp((Long) resultado[0]);
+            empresasmd.setEst_emp((Boolean) resultado[1]);
+            empresasmd.setNom_emp((String) resultado[2]);
+            empresasDList.add(empresasmd);
+        }
+        return empresasDList;
     }
 
     public Optional<EmpresasModel> ListarEmpresaId(Long id){

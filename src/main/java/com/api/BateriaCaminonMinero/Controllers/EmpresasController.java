@@ -20,7 +20,10 @@ public class EmpresasController {
     public List<EmpresasModel> GetAllE(){
         return empresasService.ListarEmpresas();
     }
-
+    @GetMapping("/empresasH/{est}")
+    public List<EmpresasModel> ListarEmpresasH(@PathVariable("est") boolean est){
+        return empresasService.ListarEmpresasH(est);
+    }
     @GetMapping("/{id}")
     public ResponseEntity<EmpresasModel> GetByIdE(@PathVariable Long id){
         Optional<EmpresasModel> empresa = empresasService.ListarEmpresaId(id);

@@ -28,6 +28,7 @@ public class DetalleBateriasModel {
     @JoinColumn(name = "bat_id", referencedColumnName = "id_bat", nullable = false)
     private BateriasModels bateriasModels;
     private Double voltaje;
+    private Double Corriente;
     private Integer carga;
     private Double temperatura;
     private Boolean est_dc;

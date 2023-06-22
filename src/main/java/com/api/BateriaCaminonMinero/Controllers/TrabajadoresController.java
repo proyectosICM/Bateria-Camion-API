@@ -29,6 +29,15 @@ public class TrabajadoresController {
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+    @GetMapping("/trabajadoresxEmpT/{emp}")
+    public List<TrabajadoresModel> BusesxEmpT(@PathVariable("emp") Long emp){
+        return trabajadoresService.ListarTrabjadorxEmpT(emp);
+    }
+
+    @GetMapping("/trabajadoresxEmpH/{est}/{emp}")
+    public List<TrabajadoresModel> BusesxEmpH(@PathVariable("est") Boolean est, @PathVariable("emp") Long emp){
+        return trabajadoresService.ListarTrabjadorxEmpH(est, emp);
+    }
 
     @PostMapping
     public ResponseEntity<TrabajadoresModel> CrearT(@RequestBody TrabajadoresModel trabajadoresModel){
