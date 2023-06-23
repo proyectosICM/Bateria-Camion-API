@@ -25,4 +25,9 @@ public class DetalleBateriasController {
     public List<DetalleBateriasModel> dxc(@PathVariable("camion") int camion, @PathVariable("bateria") int bateria){
         return detalleBateriasService.getDetallesBaterias(camion, bateria);
     }
+
+    @GetMapping("/bxcT/{camion}/{bateria}")
+    public List<DetalleBateriasModel> dxcT(@PathVariable("camion") int camion, @PathVariable("bateria") int bateria){
+        return detalleBateriasService.getDetallesBateriasT(camion, bateria);
+    }
 }

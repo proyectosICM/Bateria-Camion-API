@@ -16,4 +16,7 @@ public interface DetalleBateriasRepository extends JpaRepository<DetalleBaterias
 
     @Query(value = "CALL CAMIONXBATERIA(:camion,:bateria)", nativeQuery = true)
     List<Object[]> getDetallesBaterias(@Param("camion") int camion, @Param("bateria") int bateria);
+    @Query(value = "CALL CAMIONXBATERIAT(:camion,:bateria)", nativeQuery = true)
+    List<Object[]> getDetallesBateriasT(@Param("camion") int camion, @Param("bateria") int bateria);
+
 }

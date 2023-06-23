@@ -21,4 +21,8 @@ public class BateriasModels {
     @ManyToOne
     @JoinColumn(name = "cam_id", referencedColumnName = "id_cam", nullable = false)
     private CamionesModel camionesModel;
+    private Double voltaje;
+    private Double corriente;
+    private Integer carga;
+    private Double temperatura;
 }
