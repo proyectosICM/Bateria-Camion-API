@@ -39,6 +39,7 @@ public class DetalleBateriasService {
             detm.setVoltaje((Double) resultado[5]);
             detm.setCarga((Integer) resultado[6]);
             detm.setTemperatura((Double) resultado[7]);
+            detm.setCorriente((Double) resultado[8]);
             detbatList.add(detm);
         }
 
@@ -63,6 +64,7 @@ public class DetalleBateriasService {
             detm.setVoltaje((Double) resultado[5]);
             detm.setCarga((Integer) resultado[6]);
             detm.setTemperatura((Double) resultado[7]);
+            detm.setCorriente((Double) resultado[8]);
             detbatList.add(detm);
         }
 
