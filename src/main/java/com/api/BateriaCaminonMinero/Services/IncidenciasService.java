@@ -31,7 +31,21 @@ public class IncidenciasService {
         return incidenciasRepository.findByEmpresasModel(empresasModel);
     }
 
+    public List<IncidenciasModel>ListarIncxEmpEst(EmpresasModel empresasModel, Boolean estado){
+        return incidenciasRepository.findByEmpresasModelAndEstado(empresasModel, estado);
+    }
+
     public IncidenciasModel CrearIncidencia(IncidenciasModel incidenciasModel){
         return incidenciasRepository.save(incidenciasModel);
+    }
+
+    public IncidenciasModel CambiarEstado(IncidenciasModel incidenciasModel, Long id){
+        Optional<IncidenciasModel> existing = incidenciasRepository.findById(id);
+        if (existing.isPresent()){
+            IncidenciasModel incidencia = existing.get();
+            incidencia.setEstado(incidenciasModel.getEstado());
+            return incidenciasRepository.save(incidencia);
+        }
+        return null;
     }
 }

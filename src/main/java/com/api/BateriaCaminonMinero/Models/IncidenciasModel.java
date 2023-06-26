@@ -47,6 +47,6 @@ public class IncidenciasModel {
     private Integer carga;
     private Double corriente;
     private Double temperatura;
-    private Boolean est_inc;
+    private Boolean estado;
 
 }

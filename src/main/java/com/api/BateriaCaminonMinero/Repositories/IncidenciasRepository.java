@@ -12,4 +12,5 @@ import java.util.List;
 public interface IncidenciasRepository extends JpaRepository<IncidenciasModel, Long> {
     List<IncidenciasModel> findByCamionesModel(CamionesModel camionesModel);
     List<IncidenciasModel> findByEmpresasModel(EmpresasModel empresasModel);
+    List<IncidenciasModel> findByEmpresasModelAndEstado(EmpresasModel empresasModel, Boolean estado);
 }

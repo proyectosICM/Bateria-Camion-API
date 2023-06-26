@@ -45,9 +45,25 @@ public class IncidenciasController {
         return incidenciasService.ListarIncidenciasxEmpresa(empresasModel);
     }
 
+    @GetMapping("empSR/{id}/{estado}")
+    public List<IncidenciasModel> GetIncEmpxEst(@PathVariable Long id, @PathVariable Boolean estado){
+        EmpresasModel empresa = new EmpresasModel();
+        empresa.setId_emp(id);
+        return incidenciasService.ListarIncxEmpEst(empresa, estado);
+    }
+
     @PostMapping
     public ResponseEntity<IncidenciasModel> CrearI(@RequestBody IncidenciasModel incidenciasModel){
         IncidenciasModel cincidencia = incidenciasService.CrearIncidencia(incidenciasModel);
         return new ResponseEntity<>(cincidencia, HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<IncidenciasModel> CambiarEstadoI(@RequestBody IncidenciasModel incidenciasModel, @PathVariable Long id){
+        IncidenciasModel ceincidencia = incidenciasService.CambiarEstado(incidenciasModel,id);
+        if (ceincidencia != null){
+            return new ResponseEntity<>(ceincidencia, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }
