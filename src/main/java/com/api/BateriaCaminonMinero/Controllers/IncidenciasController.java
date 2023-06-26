@@ -38,14 +38,14 @@ public class IncidenciasController {
         return incidenciasService.ListarIncidenciasxCamion(camionesModel);
     }
 
-    @GetMapping("/empresa/{id}")
-    public List<IncidenciasModel> GetEmpresaInc(@PathVariable Long id){
-        EmpresasModel empresasModel = new EmpresasModel();
-        empresasModel.setId_emp(id);
-        return incidenciasService.ListarIncidenciasxEmpresa(empresasModel);
+    @GetMapping("/camSR/{estado}/{id}")
+    public List<IncidenciasModel> GetIncCamxEst(@PathVariable Long id, @PathVariable Boolean estado){
+        CamionesModel camionesModel = new CamionesModel();
+        camionesModel.setId_cam(id);
+        return incidenciasService.ListarIncxCamEst(camionesModel, estado);
     }
 
-    @GetMapping("empSR/{id}/{estado}")
+    @GetMapping("empSR/{estado}/{id}")
     public List<IncidenciasModel> GetIncEmpxEst(@PathVariable Long id, @PathVariable Boolean estado){
         EmpresasModel empresa = new EmpresasModel();
         empresa.setId_emp(id);

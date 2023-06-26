@@ -13,4 +13,5 @@ public interface IncidenciasRepository extends JpaRepository<IncidenciasModel, L
     List<IncidenciasModel> findByCamionesModel(CamionesModel camionesModel);
     List<IncidenciasModel> findByEmpresasModel(EmpresasModel empresasModel);
     List<IncidenciasModel> findByEmpresasModelAndEstado(EmpresasModel empresasModel, Boolean estado);
+    List<IncidenciasModel> findByCamionesModelAndEstado(CamionesModel camionesModel, Boolean estado);
 }

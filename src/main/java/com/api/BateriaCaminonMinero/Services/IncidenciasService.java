@@ -27,6 +27,10 @@ public class IncidenciasService {
         return incidenciasRepository.findByCamionesModel(camionesModel);
     }
 
+    public List<IncidenciasModel> ListarIncxCamEst(CamionesModel camionesModel, Boolean estado){
+        return incidenciasRepository.findByCamionesModelAndEstado(camionesModel, estado);
+    }
+
     public List<IncidenciasModel>ListarIncidenciasxEmpresa(EmpresasModel empresasModel){
         return incidenciasRepository.findByEmpresasModel(empresasModel);
     }
