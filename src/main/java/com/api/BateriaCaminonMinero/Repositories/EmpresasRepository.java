@@ -12,5 +12,4 @@ import java.util.List;
 public interface EmpresasRepository extends JpaRepository<EmpresasModel, Long> {
     @Query(value = "CALL EMPRESASH(:est)", nativeQuery = true)
     List<Object[]> ListarEmpresasH(@Param("est") boolean est);
-
 }

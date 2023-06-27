@@ -1,6 +1,8 @@
 package com.api.BateriaCaminonMinero.Services;
 
 import com.api.BateriaCaminonMinero.Models.CamionesModel;
+import com.api.BateriaCaminonMinero.Models.EmpresasModel;
+import com.api.BateriaCaminonMinero.Models.IncidenciasModel;
 import com.api.BateriaCaminonMinero.Repositories.CamionesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,14 @@ public class CamionesService {
     public Optional<CamionesModel> ListarCamionId(Long id){
         return camionesRepository.findById(id);
     }
+    public List<CamionesModel>ListarCamionesxEmpresaEst(EmpresasModel empresasModel, Boolean estado){
+        return camionesRepository.findByEmpresasModelAndEstado(empresasModel, estado);
+    }
+
+    public List<CamionesModel>ListarCamionesxEmpresa(EmpresasModel empresasModel){
+        return camionesRepository.findByEmpresasModel(empresasModel);
+    }
+
 
     public CamionesModel CrearCamion(CamionesModel camionesModel){
         return camionesRepository.save(camionesModel);
@@ -30,7 +40,7 @@ public class CamionesService {
         if (existing.isPresent()){
             CamionesModel camion = existing.get();
             camion.setPlaca_cam(camionesModel.getPlaca_cam());
-            camion.setEst_cam(camionesModel.getEst_cam());
+            camion.setEstado(camionesModel.getEstado());
             camion.setEmpresasModel(camionesModel.getEmpresasModel());
             camion.setTrabajadoresModel(camionesModel.getTrabajadoresModel());
             return camionesRepository.save(camion);

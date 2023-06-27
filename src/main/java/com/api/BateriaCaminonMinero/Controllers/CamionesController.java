@@ -1,6 +1,8 @@
 package com.api.BateriaCaminonMinero.Controllers;
 
 import com.api.BateriaCaminonMinero.Models.CamionesModel;
+import com.api.BateriaCaminonMinero.Models.EmpresasModel;
+import com.api.BateriaCaminonMinero.Models.IncidenciasModel;
 import com.api.BateriaCaminonMinero.Services.CamionesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,7 +32,21 @@ public class CamionesController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @PostMapping("/{id}")
+    @GetMapping("habxemp/{estado}/{id}")
+    public List<CamionesModel> GetCamEmpxEst(@PathVariable Long id, @PathVariable Boolean estado){
+        EmpresasModel empresa = new EmpresasModel();
+        empresa.setId_emp(id);
+        return camionesService.ListarCamionesxEmpresaEst(empresa, estado);
+    }
+
+    @GetMapping("camxemp/{id}")
+    public List<CamionesModel> GetCamEmp(@PathVariable Long id){
+        EmpresasModel empresa = new EmpresasModel();
+        empresa.setId_emp(id);
+        return camionesService.ListarCamionesxEmpresa((empresa));
+    }
+
+    @PostMapping
     public ResponseEntity<CamionesModel> CCam(@RequestBody CamionesModel camionesModel){
         CamionesModel ccamion = camionesService.CrearCamion(camionesModel);
         return new ResponseEntity<>(ccamion, HttpStatus.CREATED);

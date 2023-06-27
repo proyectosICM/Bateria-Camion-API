@@ -24,5 +24,5 @@ public class CamionesModel {
     @JoinColumn(name = "tra_id", referencedColumnName = "id_tra", nullable = false)
     private TrabajadoresModel trabajadoresModel;
 
-    private Boolean est_cam;
+    private Boolean estado;
 }
