@@ -39,12 +39,7 @@ public class BateriaController {
         return bateriaService.buscarBateriasPorCamionesModel(camionesModel);
     }
 
-    @GetMapping("/camionxEmp/{id}")
-    public List<BateriasModels> ListarBateriasxEmpresas(@PathVariable Long id){
-        EmpresasModel empresasModel = new EmpresasModel();
-        empresasModel.setId_emp(id);
-        return bateriaService.ListarBateriaxEmp(empresasModel);
-    }
+
 
     @PostMapping
     public ResponseEntity<BateriasModels> CCam(@RequestBody BateriasModels bateriasModels){

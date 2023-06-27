@@ -18,10 +18,10 @@ public class BateriaService {
     public List<BateriasModels> buscarBateriasPorCamionesModel(CamionesModel camionesModel) {
         return bateriaRepositoriy.findByCamionesModel(camionesModel);
     }
-
+/*
     public List<BateriasModels> ListarBateriaxEmp(EmpresasModel empresasModel){
         return bateriaRepositoriy.findByEmpresasModel(empresasModel);
-    }
+    }*/
     public List<BateriasModels> ListarBaterias(){
         return bateriaRepositoriy.findAll();
     }
