@@ -18,10 +18,13 @@ public class BateriaService {
     public List<BateriasModels> buscarBateriasPorCamionesModel(CamionesModel camionesModel) {
         return bateriaRepositoriy.findByCamionesModel(camionesModel);
     }
-/*
+
     public List<BateriasModels> ListarBateriaxEmp(EmpresasModel empresasModel){
         return bateriaRepositoriy.findByEmpresasModel(empresasModel);
-    }*/
+    }
+    public List<BateriasModels> ListarBateriaxEmpEst(EmpresasModel empresasModel, Boolean estado){
+        return bateriaRepositoriy.findByEmpresasModelAndEstado(empresasModel, estado);
+    }
     public List<BateriasModels> ListarBaterias(){
         return bateriaRepositoriy.findAll();
     }
@@ -39,7 +42,7 @@ public class BateriaService {
         if(existing.isPresent()){
             BateriasModels bateria = existing.get();
             bateria.setNom_bat(bateriasModels.getNom_bat());
-            bateria.setEst_bat(bateriasModels.getEst_bat());
+            bateria.setEstado(bateriasModels.getEstado());
             bateria.setCamionesModel(bateriasModels.getCamionesModel());
             bateria.setVoltaje(bateriasModels.getVoltaje());
             bateria.setCarga(bateriasModels.getCarga());

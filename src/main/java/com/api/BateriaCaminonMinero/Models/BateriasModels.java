@@ -16,7 +16,7 @@ public class BateriasModels {
     @Column(unique = true, nullable = false)
     private Long id_bat;
     private String nom_bat;
-    private Boolean est_bat;
+    private Boolean estado;
 
     @ManyToOne
     @JoinColumn(name = "cam_id", referencedColumnName = "id_cam", nullable = false)
@@ -28,6 +28,6 @@ public class BateriasModels {
     private Double temperatura;
 
     @ManyToOne
-    @JoinColumn(name = "emp_id", referencedColumnName = "id_emp", nullable = false)
+    @JoinColumn(name = "emp_id", referencedColumnName = "id_emp")
     private EmpresasModel empresasModel;
 }

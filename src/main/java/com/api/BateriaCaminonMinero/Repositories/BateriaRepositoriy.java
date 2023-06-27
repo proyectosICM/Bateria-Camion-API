@@ -12,4 +12,5 @@ import java.util.List;
 public interface BateriaRepositoriy extends JpaRepository<BateriasModels, Long> {
     List<BateriasModels> findByCamionesModel(CamionesModel camionesModel);
     List<BateriasModels> findByEmpresasModel(EmpresasModel empresasModel);
+    List<BateriasModels> findByEmpresasModelAndEstado(EmpresasModel empresasModel, Boolean estado);
 }

@@ -39,7 +39,18 @@ public class BateriaController {
         return bateriaService.buscarBateriasPorCamionesModel(camionesModel);
     }
 
-
+    @GetMapping("/bateriaxemp/{id}")
+    public List<BateriasModels> buscarBateriasPorCamionesModel2(@PathVariable Long id) {
+        EmpresasModel empresasModel = new EmpresasModel();
+        empresasModel.setId_emp(id);
+        return bateriaService.ListarBateriaxEmp(empresasModel);
+    }
+    @GetMapping("/bateriaxempest/{estado}/{id}")
+    public List<BateriasModels> buscarBateriasPorCamionesModel3(@PathVariable Long id, @PathVariable Boolean estado) {
+        EmpresasModel empresasModel = new EmpresasModel();
+        empresasModel.setId_emp(id);
+        return bateriaService.ListarBateriaxEmpEst(empresasModel, estado);
+    }
 
     @PostMapping
     public ResponseEntity<BateriasModels> CCam(@RequestBody BateriasModels bateriasModels){
