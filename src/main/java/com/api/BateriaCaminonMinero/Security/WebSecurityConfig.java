@@ -1,5 +1,9 @@
 package com.api.BateriaCaminonMinero.Security;
 
+import com.api.BateriaCaminonMinero.Security.filters.JwtAuthenticationFilter;
+import com.api.BateriaCaminonMinero.Security.jwt.JwtUtils;
+import com.api.BateriaCaminonMinero.Services.UserDetailsServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -16,23 +20,32 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 public class WebSecurityConfig {
+    @Autowired
+    JwtUtils jwtUtils;
+
+    @Autowired
+    UserDetailsServiceImpl userDetailsService;
     @Bean
-    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
+    SecurityFilterChain securityFilterChain(HttpSecurity http, AuthenticationManager authenticationManager) throws Exception{
+
+        JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(jwtUtils);
+        jwtAuthenticationFilter.setAuthenticationManager(authenticationManager);
+        jwtAuthenticationFilter.setFilterProcessesUrl("/login");
+
         return http.cors()
                 .and()
                 .csrf(config -> config.disable())
                 .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("api/buses/1").permitAll();
+                    auth.requestMatchers("/hola").permitAll();
                     auth.anyRequest().authenticated();
                 })
                 .sessionManagement(session -> {
                     session.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
                 })
-                .httpBasic()
-                .and()
+                .addFilter(jwtAuthenticationFilter)
                 .build();
     }
-
+/*
     @Bean
     UserDetailsService userDetailsService(){
         InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
@@ -42,6 +55,8 @@ public class WebSecurityConfig {
                 .build());
         return manager;
     }
+
+ */
     @Bean
     PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
@@ -49,7 +64,7 @@ public class WebSecurityConfig {
     @Bean
     AuthenticationManager authenticationManager(HttpSecurity httpSecurity, PasswordEncoder passwordEncoder) throws  Exception{
         return httpSecurity.getSharedObject(AuthenticationManagerBuilder.class)
-                .userDetailsService(userDetailsService())
+                .userDetailsService(userDetailsService)
                 .passwordEncoder(passwordEncoder())
                .and().build();
     }
