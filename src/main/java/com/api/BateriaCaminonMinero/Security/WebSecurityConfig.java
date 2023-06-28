@@ -1,6 +1,7 @@
 package com.api.BateriaCaminonMinero.Security;
 
 import com.api.BateriaCaminonMinero.Security.filters.JwtAuthenticationFilter;
+import com.api.BateriaCaminonMinero.Security.filters.JwtAuthorizationFilter;
 import com.api.BateriaCaminonMinero.Security.jwt.JwtUtils;
 import com.api.BateriaCaminonMinero.Services.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 public class WebSecurityConfig {
@@ -25,6 +27,9 @@ public class WebSecurityConfig {
 
     @Autowired
     UserDetailsServiceImpl userDetailsService;
+
+    @Autowired
+    JwtAuthorizationFilter authorizationFilter;
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http, AuthenticationManager authenticationManager) throws Exception{
 
@@ -43,6 +48,7 @@ public class WebSecurityConfig {
                     session.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
                 })
                 .addFilter(jwtAuthenticationFilter)
+                .addFilterBefore(authorizationFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 /*
