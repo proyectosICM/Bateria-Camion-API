@@ -7,6 +7,7 @@ import com.api.BateriaCaminonMinero.Repositories.BateriaRepositoriy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -55,6 +56,17 @@ public class BateriaService {
 
     public void EliminarBateria(Long id){
         bateriaRepositoriy.deleteById(id);
+    }
+
+    public BateriasModels DeshabilitarBateria(BateriasModels bateriasModels, Long id){
+        Optional<BateriasModels> existing = bateriaRepositoriy.findById(id);
+        if (existing.isPresent()){
+            BateriasModels bateria = existing.get();
+            bateria.setEstado(false);
+            bateria.setCamionesModel(null);
+            return bateriaRepositoriy.save(bateria);
+        }
+        return null;
     }
 
 }

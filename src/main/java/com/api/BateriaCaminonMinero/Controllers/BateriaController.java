@@ -72,4 +72,14 @@ public class BateriaController {
         bateriaService.EliminarBateria(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    @PutMapping("/deshabilitar/{id}")
+    public ResponseEntity<BateriasModels> DeshabilitarBat(@PathVariable Long id, @RequestBody BateriasModels bateriasModels){
+        BateriasModels ebateria = bateriaService.DeshabilitarBateria(bateriasModels, id);
+        if(ebateria != null){
+            return new ResponseEntity<>(ebateria, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
 }

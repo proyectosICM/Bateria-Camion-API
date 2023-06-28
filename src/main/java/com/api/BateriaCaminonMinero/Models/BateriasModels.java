@@ -19,7 +19,7 @@ public class BateriasModels {
     private Boolean estado;
 
     @ManyToOne
-    @JoinColumn(name = "cam_id", referencedColumnName = "id_cam", nullable = false)
+    @JoinColumn(name = "cam_id", referencedColumnName = "id_cam")
     private CamionesModel camionesModel;
 
     private Double voltaje;

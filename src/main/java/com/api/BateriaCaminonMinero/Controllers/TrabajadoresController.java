@@ -1,11 +1,25 @@
 package com.api.BateriaCaminonMinero.Controllers;
 
+import com.api.BateriaCaminonMinero.Models.ERole;
+import com.api.BateriaCaminonMinero.Models.EmpresasModel;
+import com.api.BateriaCaminonMinero.Models.RolesModel;
 import com.api.BateriaCaminonMinero.Models.TrabajadoresModel;
+import com.api.BateriaCaminonMinero.Repositories.EmpresasRepository;
+import com.api.BateriaCaminonMinero.Repositories.TrabajadoresRepository;
+import com.api.BateriaCaminonMinero.Request.CreateUserDTO;
 import com.api.BateriaCaminonMinero.Services.TrabajadoresService;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,6 +29,14 @@ import java.util.Optional;
 public class TrabajadoresController {
     @Autowired
     TrabajadoresService trabajadoresService;
+   @Autowired
+   PasswordEncoder passwordEncoder;
+
+    @Autowired
+    TrabajadoresRepository trabajadoresRepository;
+    @Autowired
+    EmpresasRepository empresasRepository;
+
 
     @GetMapping
     public List<TrabajadoresModel> GetAllT(){
@@ -43,6 +65,33 @@ public class TrabajadoresController {
     public ResponseEntity<TrabajadoresModel> CrearT(@RequestBody TrabajadoresModel trabajadoresModel){
         TrabajadoresModel ttrabajador = trabajadoresService.CrearTrabajador(trabajadoresModel);
         return new ResponseEntity<>(ttrabajador, HttpStatus.CREATED);
+    }
+
+    @PostMapping("/createUser")
+    public ResponseEntity<?> createUser(@Valid @RequestBody  CreateUserDTO createUserDTO){
+
+        Set<RolesModel> roles = createUserDTO.getRoles().stream()
+                .map( rol -> RolesModel.builder()
+                        .name(ERole.valueOf(rol))
+                        .build())
+                .collect(Collectors.toSet());
+
+        Long empresaId = createUserDTO.getEmpresaId();
+        EmpresasModel empresa = empresasRepository.findById(empresaId)
+                .orElseThrow(() -> new EntityNotFoundException("Empresa no encontrada"));
+
+        TrabajadoresModel trabajadoresModel = TrabajadoresModel.builder()
+                .username(createUserDTO.getUsername())
+                .pass_tra(passwordEncoder.encode(createUserDTO.getPass_tra()))
+                .nom_tra(createUserDTO.getNom_tra())
+                .ape_tra(createUserDTO.getApe_tra())
+                .dni_tra(createUserDTO.getDni_tra())
+                .est_tra(createUserDTO.getEst_tra())
+                .roles(roles)
+                .empresasModel(empresa)
+                .build();
+        trabajadoresRepository.save(trabajadoresModel);
+        return ResponseEntity.ok(trabajadoresModel);
     }
 
     @PutMapping("/{id}")
