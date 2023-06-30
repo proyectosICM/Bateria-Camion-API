@@ -44,6 +44,7 @@ public class WebSecurityConfig {
                 .csrf(config -> config.disable())
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/hola").permitAll();
+                    auth.requestMatchers("/api/trabajadores/createUser").permitAll();
                     auth.anyRequest().authenticated();
                 })
                 .sessionManagement(session -> {
