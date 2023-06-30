@@ -7,22 +7,28 @@ import com.api.BateriaCaminonMinero.Services.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.header.HeaderWriter;
+import org.springframework.security.web.header.writers.StaticHeadersWriter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.Arrays;
 
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
+@Import(WebConfig.class)
 public class WebSecurityConfig {
     @Autowired
     JwtUtils jwtUtils;
@@ -33,27 +39,53 @@ public class WebSecurityConfig {
     @Autowired
     JwtAuthorizationFilter authorizationFilter;
     @Bean
-    SecurityFilterChain securityFilterChain(HttpSecurity http, AuthenticationManager authenticationManager) throws Exception{
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000")); // Especificar los orígenes permitidos
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST")); // Especificar los métodos HTTP permitidos
+        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type")); // Especificar los encabezados permitidos
+        configuration.setAllowCredentials(true); // Permitir el envío de credenciales
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+
+        return source;
+    }
+
+    @Bean
+    SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity, AuthenticationManager authenticationManager) throws Exception {
 
         JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(jwtUtils);
         jwtAuthenticationFilter.setAuthenticationManager(authenticationManager);
         jwtAuthenticationFilter.setFilterProcessesUrl("/login");
 
-        return http.cors()
+        HeaderWriter headerWriter = new StaticHeadersWriter("Access-Control-Allow-Origin", "*");
+
+        return httpSecurity
+                .cors()
                 .and()
                 .csrf(config -> config.disable())
-                .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("/hola").permitAll();
-                    auth.requestMatchers("/api/trabajadores/createUser").permitAll();
-                    auth.anyRequest().authenticated();
-                })
                 .sessionManagement(session -> {
                     session.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
                 })
                 .addFilter(jwtAuthenticationFilter)
                 .addFilterBefore(authorizationFilter, UsernamePasswordAuthenticationFilter.class)
+                .headers().addHeaderWriter(headerWriter)  // Agregar el encabezado Access-Control-Allow-Origin
+                .and()
+                .httpBasic().disable()  // Deshabilitar la autenticación básica
+                .formLogin().disable()  // Deshabilitar el formulario de inicio de sesión
+                .logout().disable()  // Deshabilitar la funcionalidad de logout
+                .exceptionHandling().disable()
+                .authorizeHttpRequests(auth -> {
+                    auth.requestMatchers("/hola").permitAll();
+                    auth.requestMatchers("/login").permitAll();
+                    auth.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll();
+                    auth.anyRequest().authenticated();
+                })
                 .build();
     }
+
+
 /*
     @Bean
     UserDetailsService userDetailsService(){
@@ -65,7 +97,7 @@ public class WebSecurityConfig {
         return manager;
     }
 
- */
+*/
     @Bean
     PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
