@@ -3,6 +3,7 @@ package com.api.BateriaCaminonMinero.Services;
 import com.api.BateriaCaminonMinero.Models.CamionesModel;
 import com.api.BateriaCaminonMinero.Models.EmpresasModel;
 import com.api.BateriaCaminonMinero.Models.IncidenciasModel;
+import com.api.BateriaCaminonMinero.Models.TrabajadoresModel;
 import com.api.BateriaCaminonMinero.Repositories.CamionesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,12 @@ public class CamionesService {
 
     public List<CamionesModel> ListarCamiones(){
         return camionesRepository.findAll();
+    }
+    //Listar camion asociado a un conductor
+    public List<CamionesModel> ListarCamionxTrabajador(Long id){
+        TrabajadoresModel trabajadoresModel = new TrabajadoresModel();
+        trabajadoresModel.setId_tra(id);
+        return camionesRepository.findByTrabajadoresModel(trabajadoresModel);
     }
 
     public Optional<CamionesModel> ListarCamionId(Long id){

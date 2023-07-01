@@ -32,6 +32,11 @@ public class CamionesController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    //Listar camion asociado a un conductor
+    @GetMapping("camionxtrabajador/{id}")
+    public List<CamionesModel> GetCamxTra(@PathVariable Long id){
+        return camionesService.ListarCamionxTrabajador(id);
+    }
     @GetMapping("habxemp/{estado}/{id}")
     public List<CamionesModel> GetCamEmpxEst(@PathVariable Long id, @PathVariable Boolean estado){
         EmpresasModel empresa = new EmpresasModel();

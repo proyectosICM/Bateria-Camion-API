@@ -16,18 +16,9 @@ public class DetalleBateriasController {
     @Autowired
     DetalleBateriasService detalleBateriasService;
 
-    @GetMapping("/d/{camion}")
-    public List<Object[]> getDetallesValores(@PathVariable("camion") int camion){
-        return detalleBateriasService.getDetallesValores(camion);
+    @GetMapping("bateriaxdetalle/{bateria}")
+    public List<DetalleBateriasModel> GetBatxDet(@PathVariable("bateria") Long bateria){
+        return detalleBateriasService.ListarBateriaxDetalle(bateria);
     }
 
-    @GetMapping("/bxc/{camion}/{bateria}")
-    public List<DetalleBateriasModel> dxc(@PathVariable("camion") int camion, @PathVariable("bateria") int bateria){
-        return detalleBateriasService.getDetallesBaterias(camion, bateria);
-    }
-
-    @GetMapping("/bxcT/{camion}/{bateria}")
-    public List<DetalleBateriasModel> dxcT(@PathVariable("camion") int camion, @PathVariable("bateria") int bateria){
-        return detalleBateriasService.getDetallesBateriasT(camion, bateria);
-    }
 }

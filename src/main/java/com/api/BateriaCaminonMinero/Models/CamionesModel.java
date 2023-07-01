@@ -21,7 +21,7 @@ public class CamionesModel {
     private EmpresasModel empresasModel;
 
     @ManyToOne
-    @JoinColumn(name = "tra_id", referencedColumnName = "id_tra", nullable = false)
+    @JoinColumn(name = "tra_id", referencedColumnName = "id_tra", nullable = true)
     private TrabajadoresModel trabajadoresModel;
 
     private Boolean estado;
