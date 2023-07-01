@@ -23,6 +23,12 @@ public class TrabajadoresService {
     public Optional<TrabajadoresModel> ListarTrabajadorId(Long id){
         return trabajadoresRepository.findById(id);
     }
+
+    public Optional<TrabajadoresModel> ListarInfo(String username){
+       /* TrabajadoresModel trabajadoresModel = new TrabajadoresModel();
+        trabajadoresModel.setUsername(username);*/
+        return trabajadoresRepository.findByUsername(username);
+    }
     public List<TrabajadoresModel> ListarTrabjadorxEmpT(Long emp){
         List<Object[]> resultados = trabajadoresRepository.ListTrabjadorxEmpT(emp);
         List<TrabajadoresModel> trabajadorList = new ArrayList<>();

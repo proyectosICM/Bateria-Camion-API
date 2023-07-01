@@ -13,6 +13,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -59,6 +60,15 @@ public class TrabajadoresController {
     @GetMapping("/trabajadoresxEmpH/{est}/{emp}")
     public List<TrabajadoresModel> BusesxEmpH(@PathVariable("est") Boolean est, @PathVariable("emp") Long emp){
         return trabajadoresService.ListarTrabjadorxEmpH(est, emp);
+    }
+
+    @GetMapping("/info/{username}")
+    public ResponseEntity<TrabajadoresModel> infoTra(@PathVariable("username") String username){
+        Optional<TrabajadoresModel> trabajadores = trabajadoresService.ListarInfo(username);
+        if (trabajadores.isPresent()){
+            return new ResponseEntity<>(trabajadores.get(), HttpStatus.OK);
+        }
+        return null;
     }
 
     @PostMapping
