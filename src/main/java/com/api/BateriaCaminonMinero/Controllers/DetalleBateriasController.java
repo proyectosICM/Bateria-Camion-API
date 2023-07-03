@@ -16,6 +16,11 @@ public class DetalleBateriasController {
     @Autowired
     DetalleBateriasService detalleBateriasService;
 
+    @GetMapping
+    public List<DetalleBateriasModel> GetAll(){
+        return detalleBateriasService.ListarDetalles();
+    }
+
     @GetMapping("bateriaxdetalle/{bateria}")
     public List<DetalleBateriasModel> GetBatxDet(@PathVariable("bateria") Long bateria){
         return detalleBateriasService.ListarBateriaxDetalle(bateria);

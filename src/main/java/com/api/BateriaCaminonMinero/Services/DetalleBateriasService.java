@@ -17,6 +17,10 @@ public class DetalleBateriasService {
     @Autowired
     DetalleBateriasRepository detalleBateriasRepository;
 
+    public List<DetalleBateriasModel> ListarDetalles(){
+        return detalleBateriasRepository.findAll();
+    }
+
     public List<DetalleBateriasModel> ListarBateriaxDetalle(Long id){
         BateriasModels bateriasModels = new BateriasModels();
         bateriasModels.setId_bat(id);

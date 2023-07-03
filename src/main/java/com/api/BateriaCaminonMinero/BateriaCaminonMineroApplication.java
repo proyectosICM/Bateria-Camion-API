@@ -20,7 +20,7 @@ public class BateriaCaminonMineroApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(BateriaCaminonMineroApplication.class, args);
 	}
-/*
+
 	@Autowired
 	PasswordEncoder passwordEncoder;
 
@@ -33,14 +33,14 @@ public class BateriaCaminonMineroApplication {
 			EmpresasModel empresa = new EmpresasModel();
 			empresa.setId_emp(1L);
 			TrabajadoresModel trabajadoresModel = TrabajadoresModel.builder()
-					.nom_tra("Santiago")
-					.ape_tra("Valez")
+					.nom_tra("Eduardo")
+					.ape_tra("Aguilar")
 					.dni_tra("78547689")
 					.est_tra(true)
-					.username("santi")
+					.username("edas22")
 					.pass_tra(passwordEncoder.encode("1234"))
 					.roles(Set.of(RolesModel.builder()
-							.name(ERole.valueOf(ERole.ADMIN.name()))
+							.name(ERole.valueOf(ERole.SUPERVISOR.name()))
 							.build()))
 					.empresasModel(empresa)
 					.build();
@@ -48,6 +48,6 @@ public class BateriaCaminonMineroApplication {
 			trabajadoresRepository.save(trabajadoresModel);
 
 		};
-	} */
+	}
 }
 
