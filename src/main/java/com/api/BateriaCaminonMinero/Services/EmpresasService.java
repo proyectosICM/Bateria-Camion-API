@@ -19,17 +19,7 @@ public class EmpresasService {
         return empresasRepository.findAll();
     }
     public List<EmpresasModel> ListarEmpresasH(boolean est){
-        List<Object[]> resultados = empresasRepository.ListarEmpresasH(est);
-        List<EmpresasModel> empresasDList = new ArrayList<>();
-
-        for (Object[] resultado : resultados){
-            EmpresasModel empresasmd = new EmpresasModel();
-            empresasmd.setId_emp((Long) resultado[0]);
-            empresasmd.setEst_emp((Boolean) resultado[1]);
-            empresasmd.setNom_emp((String) resultado[2]);
-            empresasDList.add(empresasmd);
-        }
-        return empresasDList;
+        return empresasRepository.findByEstado(est);
     }
 
     public Optional<EmpresasModel> ListarEmpresaId(Long id){
@@ -45,7 +35,7 @@ public class EmpresasService {
         if (existing.isPresent()){
             EmpresasModel empresa = existing.get();
             empresa.setNom_emp(empresasModel.getNom_emp());
-            empresa.setEst_emp(empresasModel.getEst_emp());
+            empresa.setEstado(empresasModel.getEstado());
             return empresasRepository.save(empresa);
         } else {
             return null;

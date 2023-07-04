@@ -20,7 +20,7 @@ public class BateriaCaminonMineroApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(BateriaCaminonMineroApplication.class, args);
 	}
-
+/*
 	@Autowired
 	PasswordEncoder passwordEncoder;
 
@@ -48,6 +48,6 @@ public class BateriaCaminonMineroApplication {
 			trabajadoresRepository.save(trabajadoresModel);
 
 		};
-	}
+	}*/
 }
 

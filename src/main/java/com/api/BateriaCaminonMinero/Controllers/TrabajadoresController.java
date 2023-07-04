@@ -96,7 +96,7 @@ public class TrabajadoresController {
                 .nom_tra(createUserDTO.getNom_tra())
                 .ape_tra(createUserDTO.getApe_tra())
                 .dni_tra(createUserDTO.getDni_tra())
-                .est_tra(createUserDTO.getEst_tra())
+                .estado(createUserDTO.getEstado())
                 .roles(roles)
                 .empresasModel(empresa)
                 .build();

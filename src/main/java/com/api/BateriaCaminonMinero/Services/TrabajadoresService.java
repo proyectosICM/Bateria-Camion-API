@@ -29,44 +29,16 @@ public class TrabajadoresService {
         trabajadoresModel.setUsername(username);*/
         return trabajadoresRepository.findByUsername(username);
     }
-    public List<TrabajadoresModel> ListarTrabjadorxEmpT(Long emp){
-        List<Object[]> resultados = trabajadoresRepository.ListTrabjadorxEmpT(emp);
-        List<TrabajadoresModel> trabajadorList = new ArrayList<>();
-
-        for (Object[] resultado : resultados){
-            TrabajadoresModel trabajadoresxe =  new TrabajadoresModel();
-            trabajadoresxe.setId_tra((Long) resultado[0] );
-            trabajadoresxe.setNom_tra((String) resultado[1]);
-            trabajadoresxe.setApe_tra((String) resultado[2]);
-            trabajadoresxe.setDni_tra((String) resultado[3]);
-            EmpresasModel empresasxe = new EmpresasModel();
-            empresasxe.setId_emp((Long) resultado[4]);
-            empresasxe.setNom_emp((String) resultado[5]);
-            trabajadoresxe.setEmpresasModel(empresasxe);
-            trabajadoresxe.setEst_tra((Boolean) resultado[6]);
-            trabajadorList.add(trabajadoresxe);
-        }
-        return trabajadorList;
+    public List<TrabajadoresModel> ListarTrabjadorxEmpT(Long id){
+        EmpresasModel empresasModel = new EmpresasModel();
+        empresasModel.setId_emp(id);
+        return trabajadoresRepository.findByEmpresasModel(empresasModel);
     }
 
-    public List<TrabajadoresModel> ListarTrabjadorxEmpH( Boolean est, Long emp){
-        List<Object[]> resultados = trabajadoresRepository.ListTrabjadorxEmpH(est, emp);
-        List<TrabajadoresModel> trabajadorList = new ArrayList<>();
-
-        for (Object[] resultado : resultados){
-            TrabajadoresModel trabajadoresxe =  new TrabajadoresModel();
-            trabajadoresxe.setId_tra((Long) resultado[0] );
-            trabajadoresxe.setNom_tra((String) resultado[1]);
-            trabajadoresxe.setApe_tra((String) resultado[2]);
-            trabajadoresxe.setDni_tra((String) resultado[3]);
-            EmpresasModel empresasxe = new EmpresasModel();
-            empresasxe.setId_emp((Long) resultado[4]);
-            empresasxe.setNom_emp((String) resultado[5]);
-            trabajadoresxe.setEmpresasModel(empresasxe);
-            trabajadoresxe.setEst_tra((Boolean) resultado[6]);
-            trabajadorList.add(trabajadoresxe);
-        }
-        return trabajadorList;
+    public List<TrabajadoresModel> ListarTrabjadorxEmpH(Boolean estado, Long id){
+        EmpresasModel empresasModel = new EmpresasModel();
+        empresasModel.setId_emp(id);
+        return trabajadoresRepository.findByEmpresasModelAndEstado(estado, empresasModel);
     }
 
     public TrabajadoresModel CrearTrabajador(TrabajadoresModel trabajadoresModel){
@@ -80,7 +52,9 @@ public class TrabajadoresService {
             trabajadores.setNom_tra(trabajadoresModel.getNom_tra());
             trabajadores.setApe_tra(trabajadoresModel.getApe_tra());
             trabajadores.setDni_tra(trabajadoresModel.getDni_tra());
-            trabajadores.setEst_tra(trabajadoresModel.getEst_tra());
+            trabajadores.setUsername(trabajadoresModel.getUsername());
+            trabajadores.setPass_tra(trabajadoresModel.getPass_tra());
+            trabajadores.setEstado(trabajadoresModel.getEstado());
             trabajadores.setEmpresasModel(trabajadoresModel.getEmpresasModel());
             return trabajadoresRepository.save(trabajadores);
         } else {

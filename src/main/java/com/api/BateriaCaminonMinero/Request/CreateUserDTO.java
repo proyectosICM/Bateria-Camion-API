@@ -15,7 +15,7 @@ public class CreateUserDTO {
     private String nom_tra;
     private String ape_tra;
     private String dni_tra;
-    private Boolean est_tra;
+    private Boolean estado;
     @NotBlank
     private String username;
     @NotBlank

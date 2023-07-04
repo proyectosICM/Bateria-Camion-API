@@ -18,7 +18,7 @@ public class EmpresasModel {
     @Column(unique = true, nullable = false)
     private Long id_emp;
     private String nom_emp;
-    private Boolean est_emp;
+    private Boolean estado;
 
     @JsonIgnore
     @OneToMany(mappedBy = "empresasModel")
