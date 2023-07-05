@@ -39,7 +39,7 @@ public class CamionesController {
     }
 
     @GetMapping("habxemp/{estado}/{id}")
-    public List<CamionesModel> GetCamEmpxEst(@PathVariable Long id, @PathVariable Boolean estado){
+    public List<CamionesModel> GetCamEmpxEst(@PathVariable Boolean estado, @PathVariable Long id){
         EmpresasModel empresa = new EmpresasModel();
         empresa.setId_emp(id);
         return camionesService.ListarCamionesxEmpresaEst(empresa, estado);

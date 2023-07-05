@@ -38,7 +38,7 @@ public class TrabajadoresService {
     public List<TrabajadoresModel> ListarTrabjadorxEmpH(Boolean estado, Long id){
         EmpresasModel empresasModel = new EmpresasModel();
         empresasModel.setId_emp(id);
-        return trabajadoresRepository.findByEmpresasModelAndEstado(estado, empresasModel);
+        return trabajadoresRepository.findByEstadoAndEmpresasModel(estado, empresasModel);
     }
 
     public TrabajadoresModel CrearTrabajador(TrabajadoresModel trabajadoresModel){

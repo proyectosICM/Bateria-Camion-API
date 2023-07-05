@@ -18,5 +18,5 @@ public interface TrabajadoresRepository extends JpaRepository<TrabajadoresModel,
 
     List<TrabajadoresModel> findByEmpresasModel(EmpresasModel empresasModel);
 
-    List<TrabajadoresModel> findByEmpresasModelAndEstado(Boolean estado, EmpresasModel empresasModel);
+    List<TrabajadoresModel> findByEstadoAndEmpresasModel(Boolean estado, EmpresasModel empresasModel);
 }
