@@ -1,15 +1,16 @@
 package com.api.BateriaCaminonMinero.Services;
 
+import com.api.BateriaCaminonMinero.Models.ERole;
 import com.api.BateriaCaminonMinero.Models.EmpresasModel;
+import com.api.BateriaCaminonMinero.Models.RolesModel;
 import com.api.BateriaCaminonMinero.Models.TrabajadoresModel;
 import com.api.BateriaCaminonMinero.Repositories.TrabajadoresRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class TrabajadoresService {
@@ -47,6 +48,12 @@ public class TrabajadoresService {
 
     public TrabajadoresModel EditarTrabajador(TrabajadoresModel trabajadoresModel, Long id){
         Optional<TrabajadoresModel> existing = trabajadoresRepository.findById(id);
+        Set<RolesModel> roles = trabajadoresModel.getRoles().stream()
+                .map(rol -> RolesModel.builder()
+                        .name(rol.getName())
+                        .build())
+                .collect(Collectors.toSet());
+
         if(existing.isPresent()){
             TrabajadoresModel trabajadores = existing.get();
             trabajadores.setNom_tra(trabajadoresModel.getNom_tra());
@@ -56,6 +63,7 @@ public class TrabajadoresService {
             trabajadores.setPass_tra(trabajadoresModel.getPass_tra());
             trabajadores.setEstado(trabajadoresModel.getEstado());
             trabajadores.setEmpresasModel(trabajadoresModel.getEmpresasModel());
+            trabajadores.setRoles(roles);
             return trabajadoresRepository.save(trabajadores);
         } else {
             return null;
