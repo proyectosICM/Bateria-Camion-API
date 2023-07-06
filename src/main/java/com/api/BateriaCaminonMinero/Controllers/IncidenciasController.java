@@ -66,4 +66,13 @@ public class IncidenciasController {
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+
+    @PutMapping("revisado/{id}")
+    public ResponseEntity<IncidenciasModel> RevisadoPor(@RequestBody IncidenciasModel incidenciasModel, @PathVariable Long id){
+        IncidenciasModel rincidencia = incidenciasService.RevisadoPor(incidenciasModel, id);
+        if (rincidencia!=null){
+            return new ResponseEntity<>(rincidencia, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 }

@@ -20,6 +20,7 @@ public class CreateUserDTO {
     private String username;
     @NotBlank
     private String pass_tra;
-    private Set<String> roles;
+    //private Set<String> roles;
+    private Long roles;
     private Long empresaId;
 }

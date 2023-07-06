@@ -5,6 +5,7 @@ import com.api.BateriaCaminonMinero.Models.EmpresasModel;
 import com.api.BateriaCaminonMinero.Models.RolesModel;
 import com.api.BateriaCaminonMinero.Models.TrabajadoresModel;
 import com.api.BateriaCaminonMinero.Repositories.EmpresasRepository;
+import com.api.BateriaCaminonMinero.Repositories.RolesRepository;
 import com.api.BateriaCaminonMinero.Repositories.TrabajadoresRepository;
 import com.api.BateriaCaminonMinero.Request.CreateUserDTO;
 import com.api.BateriaCaminonMinero.Services.TrabajadoresService;
@@ -30,6 +31,9 @@ import java.util.Optional;
 public class TrabajadoresController {
     @Autowired
     TrabajadoresService trabajadoresService;
+
+    @Autowired
+    RolesRepository rolesRepository;
    @Autowired
    PasswordEncoder passwordEncoder;
 
@@ -78,18 +82,22 @@ public class TrabajadoresController {
     }
 
     @PostMapping("/createUser")
-    public ResponseEntity<?> createUser(@Valid @RequestBody  CreateUserDTO createUserDTO){
-
-        Set<RolesModel> roles = createUserDTO.getRoles().stream()
-                .map( rol -> RolesModel.builder()
-                        .name(ERole.valueOf(rol))
-                        .build())
-                .collect(Collectors.toSet());
-
+    public ResponseEntity<?> createUser(@Valid @RequestBody CreateUserDTO createUserDTO){
         Long empresaId = createUserDTO.getEmpresaId();
+
         EmpresasModel empresa = empresasRepository.findById(empresaId)
                 .orElseThrow(() -> new EntityNotFoundException("Empresa no encontrada"));
 
+        Long rolId = createUserDTO.getRoles();
+        RolesModel rol = rolesRepository.findById(rolId)
+                .orElseThrow(() -> new EntityNotFoundException("Rol no encontrado"));
+
+        /*Set<String> rolesNames = createUserDTO.getRoles();
+        Set<RolesModel> roles = rolesNames.stream()
+                .map(roleName -> rolesRepository.findByName(ERole.valueOf(roleName))
+                        .orElseThrow(() -> new EntityNotFoundException("Rol no encontrado: " + roleName)))
+                .collect(Collectors.toSet());
+*/
         TrabajadoresModel trabajadoresModel = TrabajadoresModel.builder()
                 .username(createUserDTO.getUsername())
                 .pass_tra(passwordEncoder.encode(createUserDTO.getPass_tra()))
@@ -97,9 +105,10 @@ public class TrabajadoresController {
                 .ape_tra(createUserDTO.getApe_tra())
                 .dni_tra(createUserDTO.getDni_tra())
                 .estado(createUserDTO.getEstado())
-                .roles(roles)
+                .rolesModel(rol)
                 .empresasModel(empresa)
                 .build();
+
         trabajadoresRepository.save(trabajadoresModel);
         return ResponseEntity.ok(trabajadoresModel);
     }

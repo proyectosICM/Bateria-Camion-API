@@ -12,26 +12,32 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.stream.Collectors;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     private TrabajadoresRepository trabajadoresRepository;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         TrabajadoresModel trabajadoresModel = trabajadoresRepository.findByUsername(username)
-                    .orElseThrow(() -> new UsernameNotFoundException("El usuario " + username + " no existe"));
+                .orElseThrow(() -> new UsernameNotFoundException("El usuario " + username + " no existe"));
 
-        Collection<? extends GrantedAuthority> authorities = trabajadoresModel.getRoles()
-                .stream()
-                .map(role -> new SimpleGrantedAuthority("ROLE_".concat(role.getName().name()))).collect(Collectors.toSet());
+        Collection<? extends GrantedAuthority> authorities = trabajadoresModel.getRolesModel() != null ?
+                Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + trabajadoresModel.getRolesModel().getName())) :
+                null;
 
-        return new User(trabajadoresModel.getUsername(), trabajadoresModel.getPass_tra(),
+
+        return new User(
+                trabajadoresModel.getUsername(),
+                trabajadoresModel.getPass_tra(),
                 true,
                 true,
                 true,
                 true,
-                authorities);
+                authorities
+        );
     }
 }

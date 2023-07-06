@@ -7,14 +7,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class TestRolesController {
     @GetMapping("/accessAdmin")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('CONDUCTOR')")
     public String accessAdmin(){
         return "Hola, has accedido con un rol de ADMIN";
     }
 
     @GetMapping("/accessUser")
     //@PreAuthorize("hasAnyRole('USER','ADMIN')")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('SUPERVISOR')")
     public String accessUser(){
         return "Hola, has accedido con un rol de USER";
     }

@@ -7,6 +7,7 @@ import com.api.BateriaCaminonMinero.Models.TrabajadoresModel;
 import com.api.BateriaCaminonMinero.Repositories.TrabajadoresRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -16,6 +17,9 @@ import java.util.stream.Collectors;
 public class TrabajadoresService {
     @Autowired
     TrabajadoresRepository trabajadoresRepository;
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
 
     public List<TrabajadoresModel> ListarTrabajadores(){
         return trabajadoresRepository.findAll();
@@ -48,11 +52,11 @@ public class TrabajadoresService {
 
     public TrabajadoresModel EditarTrabajador(TrabajadoresModel trabajadoresModel, Long id){
         Optional<TrabajadoresModel> existing = trabajadoresRepository.findById(id);
-        Set<RolesModel> roles = trabajadoresModel.getRoles().stream()
+        /*Set<RolesModel> roles = trabajadoresModel.getRoles().stream()
                 .map(rol -> RolesModel.builder()
                         .name(rol.getName())
                         .build())
-                .collect(Collectors.toSet());
+                .collect(Collectors.toSet());*/
 
         if(existing.isPresent()){
             TrabajadoresModel trabajadores = existing.get();
@@ -60,10 +64,10 @@ public class TrabajadoresService {
             trabajadores.setApe_tra(trabajadoresModel.getApe_tra());
             trabajadores.setDni_tra(trabajadoresModel.getDni_tra());
             trabajadores.setUsername(trabajadoresModel.getUsername());
-            trabajadores.setPass_tra(trabajadoresModel.getPass_tra());
+            trabajadores.setPass_tra(passwordEncoder.encode(trabajadoresModel.getPass_tra()));
             trabajadores.setEstado(trabajadoresModel.getEstado());
             trabajadores.setEmpresasModel(trabajadoresModel.getEmpresasModel());
-            trabajadores.setRoles(roles);
+            trabajadores.setRolesModel(trabajadoresModel.getRolesModel());
             return trabajadoresRepository.save(trabajadores);
         } else {
             return null;

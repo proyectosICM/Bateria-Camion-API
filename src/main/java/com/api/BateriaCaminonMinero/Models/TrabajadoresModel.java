@@ -34,9 +34,12 @@ public class TrabajadoresModel {
     @NotBlank
     private String pass_tra;
 
-    @ManyToMany(fetch = FetchType.EAGER, targetEntity = RolesModel.class, cascade = CascadeType.PERSIST)
+    /*@ManyToMany(fetch = FetchType.EAGER, targetEntity = RolesModel.class, cascade = CascadeType.PERSIST)
     @JoinTable(name = "trabajadores_roles", joinColumns = @JoinColumn(name = "tra_id"), inverseJoinColumns = @JoinColumn(name = "rol_id"))
-    private Set<RolesModel> roles;
+    private Set<RolesModel> roles;*/
+    @ManyToOne
+    @JoinColumn(name = "rol_id", referencedColumnName = "id", nullable = true)
+    private  RolesModel rolesModel;
 
     @ManyToOne
     @JoinColumn(name = "empresa_id", referencedColumnName = "id_emp", nullable = true)

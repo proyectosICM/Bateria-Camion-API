@@ -17,6 +17,7 @@ public class RolesModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Enumerated(EnumType.STRING)
-    private ERole name;
+    //@Enumerated(EnumType.STRING)
+    //private ERole name;
+    private String name;
 }

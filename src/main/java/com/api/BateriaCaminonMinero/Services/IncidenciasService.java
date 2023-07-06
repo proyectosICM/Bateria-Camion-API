@@ -48,7 +48,19 @@ public class IncidenciasService {
         if (existing.isPresent()){
             IncidenciasModel incidencia = existing.get();
             incidencia.setEstado(incidenciasModel.getEstado());
+            incidencia.setPrioridad(incidenciasModel.getPrioridad());
+            incidencia.setRevisadoBy(incidenciasModel.getRevisadoBy());
             return incidenciasRepository.save(incidencia);
+        }
+        return null;
+    }
+
+    public IncidenciasModel RevisadoPor(IncidenciasModel incidenciasModel, Long id){
+        Optional<IncidenciasModel> existing = incidenciasRepository.findById(id);
+        if(existing.isPresent()){
+            IncidenciasModel incidencias = existing.get();
+            incidencias.setRevisadoBy(incidenciasModel.getRevisadoBy());
+            return incidenciasRepository.save(incidencias);
         }
         return null;
     }

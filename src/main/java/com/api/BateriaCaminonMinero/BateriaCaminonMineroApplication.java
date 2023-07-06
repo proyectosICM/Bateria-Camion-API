@@ -32,16 +32,18 @@ public class BateriaCaminonMineroApplication {
 		return args -> {
 			EmpresasModel empresa = new EmpresasModel();
 			empresa.setId_emp(1L);
+
+			RolesModel rol = new RolesModel();
+			rol.setId(1L);
+
 			TrabajadoresModel trabajadoresModel = TrabajadoresModel.builder()
 					.nom_tra("Eduardo")
 					.ape_tra("Aguilar")
 					.dni_tra("78547689")
-					.est_tra(true)
+					.estado(true)
 					.username("edas22")
 					.pass_tra(passwordEncoder.encode("1234"))
-					.roles(Set.of(RolesModel.builder()
-							.name(ERole.valueOf(ERole.SUPERVISOR.name()))
-							.build()))
+					.rolesModel(rol)
 					.empresasModel(empresa)
 					.build();
 

@@ -36,8 +36,15 @@ public class IncidenciasModel {
     private CamionesModel camionesModel;
 
     @ManyToOne
-    @JoinColumn(name = "tra_id", referencedColumnName = "id_tra", nullable = false)
-    private TrabajadoresModel trabajadoresModel;
+    @JoinColumn(name = "conductor", referencedColumnName = "id_tra", nullable = false)
+    private TrabajadoresModel conductor;
+
+    @ManyToOne
+    @JoinColumn(name = "revisadoBy", referencedColumnName = "id_tra", nullable = true)
+    private TrabajadoresModel revisadoBy;
+
+    @Column(nullable = true)
+    private Boolean prioridad;
 
     @ManyToOne
     @JoinColumn(name = "emp_id", referencedColumnName = "id_emp", nullable = false)
