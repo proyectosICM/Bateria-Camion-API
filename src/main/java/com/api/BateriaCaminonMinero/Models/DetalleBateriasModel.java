@@ -16,7 +16,7 @@ public class DetalleBateriasModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, nullable = false)
-    private Long id_dc;
+    private Long id;
 
     @Temporal(TemporalType.DATE)
     private Date dia;
