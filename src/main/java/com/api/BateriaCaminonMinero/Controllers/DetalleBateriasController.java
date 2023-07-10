@@ -43,5 +43,4 @@ public class DetalleBateriasController {
         DetalleBateriasModel deta = detalleBateriasService.ListarDBateriaxDia(id, detalleBateriasModel);
         return new ResponseEntity<>(deta, HttpStatus.OK);
     }
-
 }
