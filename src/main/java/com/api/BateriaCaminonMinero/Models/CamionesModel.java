@@ -25,4 +25,6 @@ public class CamionesModel {
     private TrabajadoresModel trabajadoresModel;
 
     private Boolean estado;
+
+    private Double corrienteArranque;
 }

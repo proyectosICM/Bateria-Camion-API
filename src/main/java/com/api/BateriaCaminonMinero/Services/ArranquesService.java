@@ -4,15 +4,20 @@ import com.api.BateriaCaminonMinero.Models.ArranquesModel;
 import com.api.BateriaCaminonMinero.Models.CamionesModel;
 import com.api.BateriaCaminonMinero.Models.EmpresasModel;
 import com.api.BateriaCaminonMinero.Repositories.ArranquesRepositories;
+import com.api.BateriaCaminonMinero.Repositories.CamionesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ArranquesService {
     @Autowired
     ArranquesRepositories arranqueRepositories;
+
+    @Autowired
+    CamionesRepository camionesRepository;
     public List<ArranquesModel> ListarArranques(){
         return arranqueRepositories.findAll();
     }
@@ -30,5 +35,37 @@ public class ArranquesService {
         camionesModel.setId_cam(camion);
 
         return arranqueRepositories.findByEmpresasModelAndCamionesModel(empresasModel, camionesModel);
+    }
+
+    public ArranquesModel RegistrarArranqueSecond(ArranquesModel arranquesModel, Long id){
+        Optional<CamionesModel> camionesModel = camionesRepository.findById(id);
+        if (camionesModel.isPresent()) {
+            CamionesModel camion = camionesModel.get();
+            if (arranquesModel.getCamionesModel() == null) {
+                arranquesModel.setCamionesModel(new CamionesModel()); // Inicializar si es null
+            }
+            arranquesModel.getCamionesModel().setId_cam(camion.getId_cam());
+
+            if (arranquesModel.getEmpresasModel() == null) {
+                arranquesModel.setEmpresasModel(new EmpresasModel()); // Inicializar si es null
+            }
+            arranquesModel.getEmpresasModel().setId_emp(camion.getEmpresasModel().getId_emp());
+
+            if (arranquesModel.getCorriente() > camion.getCorrienteArranque()) {
+                return arranqueRepositories.save(arranquesModel);
+            }
+        }
+        return null;
+    }
+
+    public ArranquesModel RegistrarArranque(ArranquesModel arranquesModel){
+        if (arranquesModel.getCorriente() > arranquesModel.getCamionesModel().getCorrienteArranque()){
+            return arranqueRepositories.save(arranquesModel);
+        }
+        return null;
+    }
+
+    public ArranquesModel Registar(ArranquesModel arranquesModel){
+        return arranqueRepositories.save(arranquesModel);
     }
 }
