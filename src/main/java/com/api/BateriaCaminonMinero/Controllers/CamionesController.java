@@ -67,6 +67,15 @@ public class CamionesController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    @PutMapping("/corrinteArranque/{id}")
+    public ResponseEntity<CamionesModel> CA(@RequestBody CamionesModel camionesModel, @PathVariable Long id){
+        CamionesModel ca = camionesService.EditarCorrienteArranque(camionesModel, id);
+        if (ca != null){
+            return new ResponseEntity<>(ca, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<CamionesModel> DCam(@PathVariable Long id){
         camionesService.EliminarCamion(id);

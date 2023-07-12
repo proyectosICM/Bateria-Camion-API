@@ -26,6 +26,7 @@ public class CamionesService {
         return camionesRepository.findByTrabajadoresModel(trabajadoresModel);
     }
 
+
     public Optional<CamionesModel> ListarCamionId(Long id){
         return camionesRepository.findById(id);
     }
@@ -54,6 +55,16 @@ public class CamionesService {
         } else {
             return null;
         }
+    }
+
+    public CamionesModel EditarCorrienteArranque(CamionesModel camionesModel, Long id){
+        Optional<CamionesModel> existing = camionesRepository.findById(id);
+        if(existing.isPresent()){
+            CamionesModel camion = existing.get();
+            camion.setCorrienteArranque(camionesModel.getCorrienteArranque());
+            return camionesRepository.save(camion);
+        }
+        return null;
     }
 
     public void EliminarCamion(Long id){

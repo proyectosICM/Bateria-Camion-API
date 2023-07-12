@@ -46,6 +46,15 @@ public class TrabajadoresService {
         return trabajadoresRepository.findByEstadoAndEmpresasModel(estado, empresasModel);
     }
 
+    public List<TrabajadoresModel> ListarConductores(Long empresa){
+        EmpresasModel empresasModel = new EmpresasModel();
+        empresasModel.setId_emp(empresa);
+
+        RolesModel rolesModel = new RolesModel();
+        rolesModel.setId(1L);
+        return trabajadoresRepository.findByEmpresasModelAndRolesModel(empresasModel, rolesModel);
+    }
+
     public TrabajadoresModel CrearTrabajador(TrabajadoresModel trabajadoresModel){
         return trabajadoresRepository.save(trabajadoresModel);
     }

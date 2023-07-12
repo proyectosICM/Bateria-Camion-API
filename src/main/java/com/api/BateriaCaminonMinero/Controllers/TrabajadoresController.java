@@ -75,6 +75,12 @@ public class TrabajadoresController {
         return null;
     }
 
+    @GetMapping("/conductores/{empresa}")
+    public List<TrabajadoresModel> Conductores(@PathVariable("empresa") Long empresa){
+        List<TrabajadoresModel> trabajadores = trabajadoresService.ListarConductores(empresa);
+        return trabajadores;
+    }
+
     @PostMapping
     public ResponseEntity<TrabajadoresModel> CrearT(@RequestBody TrabajadoresModel trabajadoresModel){
         TrabajadoresModel ttrabajador = trabajadoresService.CrearTrabajador(trabajadoresModel);
