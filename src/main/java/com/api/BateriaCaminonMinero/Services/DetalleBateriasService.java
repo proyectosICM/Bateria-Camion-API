@@ -18,6 +18,10 @@
         @Autowired
         DetalleBateriasRepository detalleBateriasRepository;
 
+        public List<Object[]> PromedioBateria(Long bateria){
+            return detalleBateriasRepository.PromediosxBateria(bateria);
+        }
+
         public List<DetalleBateriasModel> ListarDetalles(){
             return detalleBateriasRepository.findAll();
         }

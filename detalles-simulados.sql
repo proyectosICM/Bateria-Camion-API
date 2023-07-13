@@ -425,92 +425,36 @@ VALUES
 (62.7, '2023-07-08', '17:00:00', 1, 1);
   
   
+DROP PROCEDURE IF EXISTS PromedioArranquesDiaxMes;
 DELIMITER //
-
-CREATE PROCEDURE ListarDatosPorMes(IN mes INT)
+CREATE PROCEDURE PromedioArranquesDiaxMes(IN camion INT)
 BEGIN
-    SELECT *
-    FROM arranques
-    WHERE MONTH(dia) = 7;
-END //
-
-DELIMITER ;
-
-CALL ListarDatosPorMes(7);
-
-DELIMITER //
-
-CREATE PROCEDURE ObtenerPromedioCorrientePorMes(IN mes INT)
-BEGIN
-    SELECT AVG(corriente) AS promedio_corriente
-    FROM arranques
-    WHERE MONTH(dia) = mes;
-END //
-
-DELIMITER ;
-
-CALL ObtenerPromedioCorrientePorMes(7);
-
-
-DELIMITER //
-
-CREATE PROCEDURE ObtenerPromedioCorrientePorMes(IN mes INT)
-BEGIN
-    SELECT count(*) AS promedio_corriente
-    FROM arranques
-    WHERE MONTH(dia) = 7;
-END //
-
-DELIMITER ;
-
-DELIMITER //
-
-CREATE PROCEDURE ObtenerPromedioCorrientePorMes2()
-BEGIN
-    DECLARE i INT DEFAULT 1;
-    DECLARE num_meses INT;
-    DECLARE mes_actual INT;
+    DECLARE fecha_inicio DATE;
+    DECLARE fecha_fin DATE;
+    DECLARE ultimo_mes DATE;
     
-    SELECT MAX(MONTH(dia)) INTO num_meses FROM arranques;
+    -- Obtener el último mes del último registro
+    SELECT MAX(dia) INTO ultimo_mes FROM arranques WHERE camion = camion;
     
-    WHILE i <= num_meses DO
-        SELECT i INTO mes_actual;
-        
-        SELECT AVG(corriente) AS promedio_corriente
-        FROM arranques
-        WHERE MONTH(dia) = mes_actual;
-        
-        SET i = i + 1;
-    END WHILE;
-END //
-
-DELIMITER ;
-  
-  call ObtenerPromedioCorrientePorMes2();
-  
-  
-  DELIMITER //
-
-CREATE PROCEDURE ObtenerPromedioCorrientePorMes3()
-BEGIN
-    SELECT MONTH(dia) AS mes, AVG(corriente) AS promedio_corriente
-    FROM arranques
-    GROUP BY MONTH(dia);
-END //
- 
-DELIMITER ;
-
- call ObtenerPromedioCorrientePorMes3();
- 
-DELIMITER //
-CREATE PROCEDURE ObtenerPromedioCorrientePorMes4(IN camion int )
-BEGIN
-    SELECT MONTH(dia) AS mes, AVG(corriente) AS promedio_corriente
+    -- Obtener la fecha de inicio y fin del último mes
+    SET fecha_inicio = DATE_SUB(LAST_DAY(ultimo_mes), INTERVAL 1 MONTH) + INTERVAL 1 DAY;
+    SET fecha_fin = LAST_DAY(ultimo_mes);
+    
+    SELECT dia, AVG(corriente) AS promedio_corriente
     FROM arranques a
-    WHERE a.camion = camion
-    GROUP BY MONTH(dia);
+    WHERE a.camion = camion AND dia >= fecha_inicio AND dia <= fecha_fin
+    GROUP BY dia;
 END //
+DELIMITER ;
 
- call ObtenerPromedioCorrientePorMes4(2);
- 
- 
+CALL PromedioArranquesDiaxMes(1);
+
+
+
+
+
+
+    SELECT a.dia, AVG(a.corriente) AS promedio_corriente, a.camion
+    FROM arranques a
+    WHERE a.camion = 1
+    GROUP BY a.dia;

@@ -1,7 +1,7 @@
 package com.api.BateriaCaminonMinero.Controllers;
 
-import com.api.BateriaCaminonMinero.Models.BateriasModels;
-import com.api.BateriaCaminonMinero.Models.DetalleBateriasModel;
+import com.api.BateriaCaminonMinero.Models.*;
+import com.api.BateriaCaminonMinero.Response.DetalleBateriaYearResponse;
 import com.api.BateriaCaminonMinero.Services.DetalleBateriasService;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -17,6 +18,36 @@ import java.util.List;
 public class DetalleBateriasController {
     @Autowired
     DetalleBateriasService detalleBateriasService;
+    @GetMapping("/promedioxmes/{bateria}")
+    public List<DetalleBateriaYearResponse> arranquesxmes2(@PathVariable Long bateria) {
+        List<Object[]> result = detalleBateriasService.PromedioBateria(bateria);
+        List<DetalleBateriaYearResponse> response = new ArrayList<>();
+
+        for (Object[] row : result) {
+            int fecha = (int) row[0];
+            Long contador = (Long) row[1];
+            double voltaje = (double) row[2];
+            double carga = (double) row[3];
+            double corriente = (double) row[4];
+            double temperatura = (double) row[5];
+
+            DetalleBateriaYearResponse entry = new DetalleBateriaYearResponse();
+            entry.setFecha(fecha);
+            entry.setContador(contador);
+            entry.setVoltaje(voltaje);
+            entry.setCarga(carga);
+            entry.setCorriente(corriente);
+            entry.setTemperatura(temperatura);
+            response.add(entry);
+        }
+
+        return response;
+    }
+
+    @GetMapping("/promedioxmes2/{bateria}")
+    public List<Object[]> arranquesxmes3(@PathVariable Long bateria) {
+        return detalleBateriasService.PromedioBateria(bateria);
+    }
 
     @GetMapping
     public List<DetalleBateriasModel> GetAll(){

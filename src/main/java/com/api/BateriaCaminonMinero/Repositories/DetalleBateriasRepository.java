@@ -19,4 +19,11 @@ public interface DetalleBateriasRepository extends JpaRepository<DetalleBaterias
 
     DetalleBateriasModel findByBateriasModelsAndDia(Long id , Date dia);
 
+    @Query("SELECT MONTH(d.dia) AS mes, COUNT(*) AS total_registros, AVG(d.voltaje) AS voltajepromedio, AVG(d.carga) AS cargapromedio, AVG(d.Corriente) AS corrientePromedio, AVG(d.temperatura) AS temperaturapromedio " +
+            "FROM DetalleBateriasModel d " +
+            "WHERE YEAR(d.dia) = YEAR(CURRENT_DATE()) AND d.bateriasModels.id = :bateriaId " +
+            "GROUP BY MONTH(d.dia)")
+    List<Object[]> PromediosxBateria(@Param("bateriaId") Long bateriaId);
+
+
 }
