@@ -8,6 +8,7 @@ import com.api.BateriaCaminonMinero.Repositories.CamionesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,6 +21,14 @@ public class ArranquesService {
     CamionesRepository camionesRepository;
     public List<ArranquesModel> ListarArranques(){
         return arranqueRepositories.findAll();
+    }
+    public List<Object[]> PromedioCamion(int camion){
+        return arranqueRepositories.PromediosxCamion(camion);
+    }
+
+
+    public List<ArranquesModel> obtenerArranquesPorMes(int mes) {
+        return arranqueRepositories.findByMes(mes);
     }
     public List<ArranquesModel> ListarArranquexCamion(Long id){
         CamionesModel camionesModel = new CamionesModel();

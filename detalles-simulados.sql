@@ -425,3 +425,92 @@ VALUES
 (62.7, '2023-07-08', '17:00:00', 1, 1);
   
   
+DELIMITER //
+
+CREATE PROCEDURE ListarDatosPorMes(IN mes INT)
+BEGIN
+    SELECT *
+    FROM arranques
+    WHERE MONTH(dia) = 7;
+END //
+
+DELIMITER ;
+
+CALL ListarDatosPorMes(7);
+
+DELIMITER //
+
+CREATE PROCEDURE ObtenerPromedioCorrientePorMes(IN mes INT)
+BEGIN
+    SELECT AVG(corriente) AS promedio_corriente
+    FROM arranques
+    WHERE MONTH(dia) = mes;
+END //
+
+DELIMITER ;
+
+CALL ObtenerPromedioCorrientePorMes(7);
+
+
+DELIMITER //
+
+CREATE PROCEDURE ObtenerPromedioCorrientePorMes(IN mes INT)
+BEGIN
+    SELECT count(*) AS promedio_corriente
+    FROM arranques
+    WHERE MONTH(dia) = 7;
+END //
+
+DELIMITER ;
+
+DELIMITER //
+
+CREATE PROCEDURE ObtenerPromedioCorrientePorMes2()
+BEGIN
+    DECLARE i INT DEFAULT 1;
+    DECLARE num_meses INT;
+    DECLARE mes_actual INT;
+    
+    SELECT MAX(MONTH(dia)) INTO num_meses FROM arranques;
+    
+    WHILE i <= num_meses DO
+        SELECT i INTO mes_actual;
+        
+        SELECT AVG(corriente) AS promedio_corriente
+        FROM arranques
+        WHERE MONTH(dia) = mes_actual;
+        
+        SET i = i + 1;
+    END WHILE;
+END //
+
+DELIMITER ;
+  
+  call ObtenerPromedioCorrientePorMes2();
+  
+  
+  DELIMITER //
+
+CREATE PROCEDURE ObtenerPromedioCorrientePorMes3()
+BEGIN
+    SELECT MONTH(dia) AS mes, AVG(corriente) AS promedio_corriente
+    FROM arranques
+    GROUP BY MONTH(dia);
+END //
+ 
+DELIMITER ;
+
+ call ObtenerPromedioCorrientePorMes3();
+ 
+DELIMITER //
+CREATE PROCEDURE ObtenerPromedioCorrientePorMes4(IN camion int )
+BEGIN
+    SELECT MONTH(dia) AS mes, AVG(corriente) AS promedio_corriente
+    FROM arranques a
+    WHERE a.camion = camion
+    GROUP BY MONTH(dia);
+END //
+
+ call ObtenerPromedioCorrientePorMes4(2);
+ 
+ 
