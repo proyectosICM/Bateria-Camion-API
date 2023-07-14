@@ -20,6 +20,9 @@ public class ArranquesService {
     public List<ArranquesModel> ListarArranques(){
         return arranqueRepositories.findAll();
     }
+    public List<ArranquesModel> ArranqueUltimoDia(int camion){
+        return arranqueRepositories.ArranqueUltimoDia(camion);
+    }
 
     public List<Object[]> obtenerPromedioCorrienteUltimoMes(int camion) {
         return arranqueRepositories.PromedioCorrienteUltimoMes(camion);

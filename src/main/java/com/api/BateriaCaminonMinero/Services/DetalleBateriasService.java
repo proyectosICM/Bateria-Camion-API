@@ -18,8 +18,16 @@
         @Autowired
         DetalleBateriasRepository detalleBateriasRepository;
 
+        public List<DetalleBateriasModel> DetallesUltimoDiaBateria(Long bateria){
+            //List<DetalleBateriasModel> result = detalleBateriasRepository.DetallesUltimoDiaPorBateria(bateria);
+            return detalleBateriasRepository.DetallesUltimoDiaPorBateria(bateria);
+        }
+
         public List<Object[]> PromedioBateria(Long bateria){
             return detalleBateriasRepository.PromediosxBateria(bateria);
+        }
+        public List<Object[]> PromedioBateriaDiaxMes(Long bateria){
+            return detalleBateriasRepository.PromedioDetalleDiaxMes(bateria);
         }
 
         public List<DetalleBateriasModel> ListarDetalles(){

@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -27,7 +28,7 @@ public class DetalleBateriasController {
             int fecha = (int) row[0];
             Long contador = (Long) row[1];
             double voltaje = (double) row[2];
-            double carga = (double) row[3];
+            double cargaA = (double) row[3];
             double corriente = (double) row[4];
             double temperatura = (double) row[5];
 
@@ -35,7 +36,7 @@ public class DetalleBateriasController {
             entry.setFecha(fecha);
             entry.setContador(contador);
             entry.setVoltaje(voltaje);
-            entry.setCarga(carga);
+            entry.setCargaA(cargaA);
             entry.setCorriente(corriente);
             entry.setTemperatura(temperatura);
             response.add(entry);
@@ -43,7 +44,41 @@ public class DetalleBateriasController {
 
         return response;
     }
+    @GetMapping("/promediodiaxmes/{bateria}")
+    public List<DetalleBateriaYearResponse> arranquesdiaxmes(@PathVariable Long bateria) {
+        List<Object[]> result = detalleBateriasService.PromedioBateriaDiaxMes(bateria);
+        List<DetalleBateriaYearResponse> response = new ArrayList<>();
 
+        for (Object[] row : result) {
+            Date fecha = (Date) row[0];
+            Double voltaje = (Double) row[1];
+            BigDecimal carga = (BigDecimal) row[2];
+            Double corriente = (Double) row[3];
+            Double temperatura = (Double) row[4];
+            Long contador = (Long) row[5];
+
+            DetalleBateriaYearResponse entry = new DetalleBateriaYearResponse();
+            entry.setDia(fecha);
+            entry.setVoltaje(voltaje);
+            entry.setCarga(carga);
+            entry.setCorriente(corriente);
+            entry.setTemperatura(temperatura);
+            entry.setContador(contador);
+            response.add(entry);
+        }
+
+        return response;
+    }
+    @GetMapping("/ultimodia/{bateria}")
+    public List<DetalleBateriasModel> UltimoDia(@PathVariable Long bateria){
+        return detalleBateriasService.DetallesUltimoDiaBateria(bateria);
+    }
+
+    @GetMapping("/promediodiaxmes2/{bateria}")
+    public List<Object[]> arranquesdiaxmes2(@PathVariable Long bateria) {
+        return detalleBateriasService.PromedioBateriaDiaxMes(bateria);
+
+    }
     @GetMapping("/promedioxmes2/{bateria}")
     public List<Object[]> arranquesxmes3(@PathVariable Long bateria) {
         return detalleBateriasService.PromedioBateria(bateria);

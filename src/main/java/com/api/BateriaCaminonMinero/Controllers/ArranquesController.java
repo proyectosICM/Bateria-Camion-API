@@ -22,6 +22,10 @@ public class ArranquesController {
     public List<ArranquesModel> ListarArranques(){
         return arranqueService.ListarArranques();
     }
+    @GetMapping("/ultimodia/{camion}")
+    public List<ArranquesModel> ArranqueUltimoDia(@PathVariable int camion){
+        return arranqueService.ArranqueUltimoDia(camion);
+    }
 
     @GetMapping("/xcamion/{id}")
     public List<ArranquesModel> ListarArranquexCamion(@PathVariable Long id){

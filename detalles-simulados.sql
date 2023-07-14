@@ -424,7 +424,7 @@ VALUES
 (73.8, '2023-07-08', '11:00:00', 1, 1),
 (62.7, '2023-07-08', '17:00:00', 1, 1);
   
-  
+
 DROP PROCEDURE IF EXISTS PromedioArranquesDiaxMes;
 DELIMITER //
 CREATE PROCEDURE PromedioArranquesDiaxMes(IN camion INT)
@@ -440,7 +440,7 @@ BEGIN
     SET fecha_inicio = DATE_SUB(LAST_DAY(ultimo_mes), INTERVAL 1 MONTH) + INTERVAL 1 DAY;
     SET fecha_fin = LAST_DAY(ultimo_mes);
     
-    SELECT dia, AVG(corriente) AS promedio_corriente
+    SELECT dia, AVG(corriente) AS promedio_corriente, count(*) as contador
     FROM arranques a
     WHERE a.camion = camion AND dia >= fecha_inicio AND dia <= fecha_fin
     GROUP BY dia;
@@ -450,11 +450,57 @@ DELIMITER ;
 CALL PromedioArranquesDiaxMes(1);
 
 
+DROP PROCEDURE IF EXISTS PromedioDetalleDiaxMes;
+DELIMITER //
+CREATE PROCEDURE PromedioDetalleDiaxMes(IN bateria int)
+BEGIN
+    DECLARE fecha_inicio DATE;
+    DECLARE fecha_fin DATE;
+    DECLARE ultimo_mes DATE;
+    
+    -- Obtener el último mes del último registro para la batería específica
+    SELECT MAX(dia) INTO ultimo_mes FROM detalle_baterias WHERE bat_id = bateria;
+    
+    -- Obtener la fecha de inicio y fin del último mes
+    SET fecha_inicio = DATE_SUB(LAST_DAY(ultimo_mes), INTERVAL 1 MONTH) + INTERVAL 1 DAY;
+    SET fecha_fin = LAST_DAY(ultimo_mes);
+    
+    SELECT dia, AVG(voltaje) AS promedio_voltaje, AVG(carga) AS promedio_carga, AVG(corriente) AS promedio_corriente, AVG(temperatura) AS promedio_temperatura, COUNT(*) AS conteo
+    FROM detalle_baterias
+    WHERE bat_id = bateria AND dia >= fecha_inicio AND dia <= fecha_fin
+    GROUP BY dia;
+END //
+DELIMITER ;
 
 
 
+CALL PromedioDetalleDiaxMes(1);
 
-    SELECT a.dia, AVG(a.corriente) AS promedio_corriente, a.camion
-    FROM arranques a
-    WHERE a.camion = 1
-    GROUP BY a.dia;
+select * from detalle_baterias;
+
+
+-- ********************************** 
+
+DROP PROCEDURE IF EXISTS ObtenerDatosUltimoDiaPorBateria;
+DELIMITER //
+
+CREATE PROCEDURE ObtenerDatosUltimoDiaPorBateria(IN bateria int)
+BEGIN
+    DECLARE done INT DEFAULT FALSE;
+    DECLARE bateria_id INT;
+    DECLARE cur CURSOR FOR SELECT DISTINCT bat_id FROM detalle_baterias;
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
+
+
+
+        SELECT *
+        FROM detalle_baterias
+        WHERE bat_id = bateria
+        ORDER BY dia DESC, hora DESC
+END //
+
+DELIMITER ;
+
+CALL ObtenerDatosUltimoDiaPorBateria(1);
+
+

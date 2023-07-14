@@ -18,6 +18,8 @@ public interface ArranquesRepositories extends JpaRepository<ArranquesModel, Lon
 
     @Query(value = "CALL PromedioArranquesDiaxMes(:camion)", nativeQuery = true)
     List<Object[]> PromedioCorrienteUltimoMes(@Param("camion") int camion);
+    @Query("SELECT a FROM ArranquesModel a WHERE a.camionesModel.id = :camion AND a.dia = (SELECT MAX(dia) FROM ArranquesModel WHERE camionesModel.id = :camion)")
+    List<ArranquesModel> ArranqueUltimoDia(@Param("camion") int camion);
 
     //Promedio de año(cada mes) y conteo del año
     @Query("SELECT MONTH(a.dia) AS mes, AVG(a.corriente) AS promedio_corriente, a.camionesModel, a.empresasModel FROM ArranquesModel a WHERE YEAR(a.dia) = YEAR(CURRENT_DATE()) AND a.camionesModel.id = :camion GROUP BY MONTH(a.dia)")
