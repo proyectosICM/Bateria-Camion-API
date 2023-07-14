@@ -481,26 +481,45 @@ select * from detalle_baterias;
 
 -- ********************************** 
 
-DROP PROCEDURE IF EXISTS ObtenerDatosUltimoDiaPorBateria;
+DROP PROCEDURE IF EXISTS DetallesUltimoDiaPorBateria;
 DELIMITER //
-
-CREATE PROCEDURE ObtenerDatosUltimoDiaPorBateria(IN bateria int)
+CREATE PROCEDURE DetallesUltimoDiaPorBateria(IN bateria_id INT)
 BEGIN
-    DECLARE done INT DEFAULT FALSE;
-    DECLARE bateria_id INT;
-    DECLARE cur CURSOR FOR SELECT DISTINCT bat_id FROM detalle_baterias;
-    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
+    DECLARE fecha_ultimo_dia DATE;
+
+    -- Obtener la fecha del último día
+    SELECT MAX(dia) INTO fecha_ultimo_dia
+    FROM detalle_baterias
+    WHERE bat_id = bateria_id;
+
+    -- Mostrar los registros del último día para la batería específica
+    SELECT *
+    FROM detalle_baterias
+    WHERE bat_id = bateria_id AND dia = fecha_ultimo_dia;
+END //
+DELIMITER ;
+
+CALL DetallesUltimoDiaPorBateria(2);
 
 
+DROP PROCEDURE IF EXISTS DetallesUltimoDiaPorArranque;
+DELIMITER //
+CREATE PROCEDURE DetallesUltimoDiaPorArranque(IN camion INT)
+BEGIN
+    DECLARE fecha_ultimo_dia DATE;
 
-        SELECT *
-        FROM detalle_baterias
-        WHERE bat_id = bateria
-        ORDER BY dia DESC, hora DESC
+    -- Obtener la fecha del último día
+    SELECT MAX(dia) INTO fecha_ultimo_dia
+    FROM arranques a 
+    WHERE a.camion = camion;
+
+    -- Mostrar los registros del último día para la batería específica
+    SELECT *
+    FROM arranques a
+    WHERE a.camion = camion AND dia = fecha_ultimo_dia;
 END //
 
 DELIMITER ;
 
-CALL ObtenerDatosUltimoDiaPorBateria(1);
-
+call DetallesUltimoDiaPorArranque(2);
 

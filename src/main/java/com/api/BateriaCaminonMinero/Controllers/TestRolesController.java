@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class TestRolesController {
+
     @GetMapping("/accessAdmin")
     @PreAuthorize("hasRole('CONDUCTOR')")
     public String accessAdmin(){
