@@ -434,7 +434,7 @@ BEGIN
     DECLARE ultimo_mes DATE;
     
     -- Obtener el último mes del último registro
-    SELECT MAX(dia) INTO ultimo_mes FROM arranques WHERE camion = camion;
+    SELECT MAX(dia) INTO ultimo_mes FROM arranques a WHERE a.camion = camion;
     
     -- Obtener la fecha de inicio y fin del último mes
     SET fecha_inicio = DATE_SUB(LAST_DAY(ultimo_mes), INTERVAL 1 MONTH) + INTERVAL 1 DAY;
@@ -447,7 +447,7 @@ BEGIN
 END //
 DELIMITER ;
 
-CALL PromedioArranquesDiaxMes(1);
+CALL PromedioArranquesDiaxMes(2);
 
 
 DROP PROCEDURE IF EXISTS PromedioDetalleDiaxMes;
@@ -499,7 +499,7 @@ BEGIN
 END //
 DELIMITER ;
 
-CALL DetallesUltimoDiaPorBateria(2);
+CALL DetallesUltimoDiaPorBateria(1);
 
 
 DROP PROCEDURE IF EXISTS DetallesUltimoDiaPorArranque;
@@ -521,5 +521,5 @@ END //
 
 DELIMITER ;
 
-call DetallesUltimoDiaPorArranque(2);
+call DetallesUltimoDiaPorArranque(1);
 
