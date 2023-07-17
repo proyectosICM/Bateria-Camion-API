@@ -5,6 +5,9 @@ import com.api.BateriaCaminonMinero.Models.EmpresasModel;
 import com.api.BateriaCaminonMinero.Models.RolesModel;
 import com.api.BateriaCaminonMinero.Models.TrabajadoresModel;
 import com.api.BateriaCaminonMinero.Repositories.TrabajadoresRepository;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.info.License;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -19,6 +22,18 @@ public class BateriaCaminonMineroApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(BateriaCaminonMineroApplication.class, args);
+	}
+
+	@Bean
+	public OpenAPI customOpenAPI(){
+		return new OpenAPI()
+				.info(new Info()
+						.title("API Gestor de baterias")
+						.version("0.11")
+						.description("Sample example")
+						.termsOfService("http://swagger.io/terms/")
+						.license(new License().name("Apache").url("http://springdoc.org"))
+				);
 	}
 /*
 	@Autowired
