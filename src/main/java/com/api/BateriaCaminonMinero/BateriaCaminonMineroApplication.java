@@ -35,13 +35,13 @@ public class BateriaCaminonMineroApplication {
 						.license(new License().name("Apache").url("http://springdoc.org"))
 				);
 	}
-/*
+
 	@Autowired
 	PasswordEncoder passwordEncoder;
 
 	@Autowired
 	TrabajadoresRepository trabajadoresRepository;
-
+/*
 	@Bean
 	CommandLineRunner init(){
 		return args -> {
@@ -49,14 +49,14 @@ public class BateriaCaminonMineroApplication {
 			empresa.setId_emp(1L);
 
 			RolesModel rol = new RolesModel();
-			rol.setId(1L);
+			rol.setId(3L);
 
 			TrabajadoresModel trabajadoresModel = TrabajadoresModel.builder()
 					.nom_tra("Eduardo")
 					.ape_tra("Aguilar")
 					.dni_tra("78547689")
 					.estado(true)
-					.username("edas22")
+					.username("admin")
 					.pass_tra(passwordEncoder.encode("1234"))
 					.rolesModel(rol)
 					.empresasModel(empresa)

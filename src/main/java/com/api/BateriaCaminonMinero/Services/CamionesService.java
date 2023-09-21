@@ -20,11 +20,13 @@ public class CamionesService {
         return camionesRepository.findAll();
     }
     //Listar camion asociado a un conductor
-    public List<CamionesModel> ListarCamionxTrabajador(Long id){
+    public Optional<CamionesModel> ListarCamionxTrabajador(Long id){
         TrabajadoresModel trabajadoresModel = new TrabajadoresModel();
         trabajadoresModel.setId_tra(id);
         return camionesRepository.findByTrabajadoresModel(trabajadoresModel);
     }
+
+
 
 
     public Optional<CamionesModel> ListarCamionId(Long id){
