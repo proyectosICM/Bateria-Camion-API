@@ -41,7 +41,21 @@ public class WebSecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000")); // Especificar los orígenes permitidos
+/*
+        configuration.setAllowedOrigins(Arrays.asList(
+                "http://localhost:3000",
+                "http://192.168.1.232",
+                "http://192.168.1.232:3000",
+                "http://192.168.1.158",         // Agrega esta URL
+                "http://192.168.1.158:19000",   // Agrega esta URL
+                "http://192.168.1.158:3000",
+                "http://192.168.1.35",
+                "http://192.168.1.35:3000"
+        ));
+        */
+
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
+
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT")); // Especificar los métodos HTTP permitidos
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type")); // Especificar los encabezados permitidos
         configuration.setAllowCredentials(true); // Permitir el envío de credenciales
@@ -78,6 +92,13 @@ public class WebSecurityConfig {
                 .exceptionHandling().disable()
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/hola").permitAll();
+                    auth.requestMatchers("/api/camiones").permitAll();
+                    auth.requestMatchers("/unprotected").permitAll();
+                    auth.requestMatchers("/unprotected").permitAll();
+                    auth.requestMatchers("/redirigido").permitAll();
+                    auth.requestMatchers("/api/imagen/**").permitAll();
+                    auth.requestMatchers("/saludof").permitAll();
+                    auth.requestMatchers("/get-ip").permitAll();
                     auth.requestMatchers("/login").permitAll();
                     auth.requestMatchers("/swagger-ui/**").permitAll();
                     auth.requestMatchers("/doc/**").permitAll();
@@ -92,18 +113,18 @@ public class WebSecurityConfig {
     }
 
 
-/*
-    @Bean
-    UserDetailsService userDetailsService(){
-        InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
-        manager.createUser(User.withUsername("Eduardo")
-                .password(passwordEncoder().encode("1234"))
-                .roles()
-                .build());
-        return manager;
-    }
+    /*
+        @Bean
+        UserDetailsService userDetailsService(){
+            InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
+            manager.createUser(User.withUsername("Eduardo")
+                    .password(passwordEncoder().encode("1234"))
+                    .roles()
+                    .build());
+            return manager;
+        }
 
-*/
+    */
     @Bean
     PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
@@ -113,6 +134,6 @@ public class WebSecurityConfig {
         return httpSecurity.getSharedObject(AuthenticationManagerBuilder.class)
                 .userDetailsService(userDetailsService)
                 .passwordEncoder(passwordEncoder())
-               .and().build();
+                .and().build();
     }
 }
