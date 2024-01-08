@@ -22,7 +22,7 @@ public class CamionesService {
     //Listar camion asociado a un conductor
     public Optional<CamionesModel> ListarCamionxTrabajador(Long id){
         TrabajadoresModel trabajadoresModel = new TrabajadoresModel();
-        trabajadoresModel.setId_tra(id);
+        trabajadoresModel.setId(id);
         return camionesRepository.findByTrabajadoresModel(trabajadoresModel);
     }
 
@@ -49,7 +49,7 @@ public class CamionesService {
         Optional<CamionesModel> existing = camionesRepository.findById(id);
         if (existing.isPresent()){
             CamionesModel camion = existing.get();
-            camion.setPlaca_cam(camionesModel.getPlaca_cam());
+            camion.setPlaca(camionesModel.getPlaca());
             camion.setEstado(camionesModel.getEstado());
             camion.setEmpresasModel(camionesModel.getEmpresasModel());
             camion.setTrabajadoresModel(camionesModel.getTrabajadoresModel());

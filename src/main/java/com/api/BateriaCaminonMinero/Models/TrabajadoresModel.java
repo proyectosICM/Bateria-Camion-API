@@ -23,25 +23,22 @@ public class TrabajadoresModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, nullable = false)
-    private Long id_tra;
+    private Long id;
     @NotBlank
-    private String nom_tra;
-    private String ape_tra;
-    private String dni_tra;
+    private String nombre;
+    private String apellido;
+    private String dni;
     private Boolean estado;
     @NotBlank
     private String username;
     @NotBlank
-    private String pass_tra;
+    private String password;
 
-    /*@ManyToMany(fetch = FetchType.EAGER, targetEntity = RolesModel.class, cascade = CascadeType.PERSIST)
-    @JoinTable(name = "trabajadores_roles", joinColumns = @JoinColumn(name = "tra_id"), inverseJoinColumns = @JoinColumn(name = "rol_id"))
-    private Set<RolesModel> roles;*/
     @ManyToOne
-    @JoinColumn(name = "rol_id", referencedColumnName = "id", nullable = true)
+    @JoinColumn(name = "rol", referencedColumnName = "id", nullable = true)
     private  RolesModel rolesModel;
 
     @ManyToOne
-    @JoinColumn(name = "empresa_id", referencedColumnName = "id_emp", nullable = true)
+    @JoinColumn(name = "empresa", referencedColumnName = "id", nullable = true)
     private  EmpresasModel empresasModel;
 }

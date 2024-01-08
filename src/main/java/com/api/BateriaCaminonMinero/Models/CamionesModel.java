@@ -14,14 +14,14 @@ public class CamionesModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, nullable = false)
-    private Long id_cam;
-    private String placa_cam;
+    private Long id;
+    private String placa;
     @ManyToOne
-    @JoinColumn(name = "emp_id", referencedColumnName = "id_emp", nullable = false)
+    @JoinColumn(name = "empresa", referencedColumnName = "id", nullable = false)
     private EmpresasModel empresasModel;
 
     @ManyToOne
-    @JoinColumn(name = "tra_id", referencedColumnName = "id_tra", nullable = true)
+    @JoinColumn(name = "trabajador", referencedColumnName = "id", nullable = true)
     private TrabajadoresModel trabajadoresModel;
 
     private Boolean estado;

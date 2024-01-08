@@ -42,7 +42,7 @@ public class BateriaService {
         Optional<BateriasModels> existing = bateriaRepositoriy.findById(id);
         if(existing.isPresent()){
             BateriasModels bateria = existing.get();
-            bateria.setNom_bat(bateriasModels.getNom_bat());
+            bateria.setNombre(bateriasModels.getNombre());
             bateria.setEstado(bateriasModels.getEstado());
             bateria.setCamionesModel(bateriasModels.getCamionesModel());
             bateria.setVoltaje(bateriasModels.getVoltaje());
@@ -55,7 +55,7 @@ public class BateriaService {
     }
 
     public BateriasModels EstadosBateria(BateriasModels bateriasModels){
-        Optional<BateriasModels> existing = bateriaRepositoriy.findById(bateriasModels.getId_bat());
+        Optional<BateriasModels> existing = bateriaRepositoriy.findById(bateriasModels.getId());
         if (existing.isPresent()){
             BateriasModels bateria = existing.get();
             bateria.setVoltaje(bateriasModels.getVoltaje());

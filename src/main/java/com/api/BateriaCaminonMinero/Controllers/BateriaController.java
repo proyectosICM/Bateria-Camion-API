@@ -35,20 +35,20 @@ public class BateriaController {
     @GetMapping("/camiones/{id}")
     public List<BateriasModels> buscarBateriasPorCamionesModel(@PathVariable Long id) {
         CamionesModel camionesModel = new CamionesModel();
-        camionesModel.setId_cam(id);
+        camionesModel.setId(id);
         return bateriaService.buscarBateriasPorCamionesModel(camionesModel);
     }
 
     @GetMapping("/bateriaxemp/{id}")
     public List<BateriasModels> buscarBateriasPorCamionesModel2(@PathVariable Long id) {
         EmpresasModel empresasModel = new EmpresasModel();
-        empresasModel.setId_emp(id);
+        empresasModel.setId(id);
         return bateriaService.ListarBateriaxEmp(empresasModel);
     }
     @GetMapping("/bateriaxempest/{estado}/{id}")
     public List<BateriasModels> buscarBateriasPorCamionesModel3(@PathVariable Long id, @PathVariable Boolean estado) {
         EmpresasModel empresasModel = new EmpresasModel();
-        empresasModel.setId_emp(id);
+        empresasModel.setId(id);
         return bateriaService.ListarBateriaxEmpEst(empresasModel, estado);
     }
 

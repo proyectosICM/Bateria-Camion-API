@@ -36,7 +36,7 @@
 
         public List<DetalleBateriasModel> ListarBateriaxDetalle(Long id){
             BateriasModels bateriasModels = new BateriasModels();
-            bateriasModels.setId_bat(id);
+            bateriasModels.setId(id);
             return detalleBateriasRepository.findByBateriasModels(bateriasModels);
         }
 

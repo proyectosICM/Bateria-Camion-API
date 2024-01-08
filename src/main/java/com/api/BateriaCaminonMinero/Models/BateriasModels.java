@@ -14,12 +14,12 @@ public class BateriasModels {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, nullable = false)
-    private Long id_bat;
-    private String nom_bat;
+    private Long id;
+    private String nombre;
     private Boolean estado;
 
     @ManyToOne
-    @JoinColumn(name = "cam_id", referencedColumnName = "id_cam")
+    @JoinColumn(name = "camion", referencedColumnName = "id")
     private CamionesModel camionesModel;
 
     private Double voltaje;
@@ -28,6 +28,6 @@ public class BateriasModels {
     private Double temperatura;
 
     @ManyToOne
-    @JoinColumn(name = "emp_id", referencedColumnName = "id_emp")
+    @JoinColumn(name = "empresa", referencedColumnName = "id")
     private EmpresasModel empresasModel;
 }

@@ -26,11 +26,11 @@ public class ArranquesModel {
     private Time hora;
 
     @ManyToOne
-    @JoinColumn(name = "camion", referencedColumnName = "id_cam", nullable = false)
+    @JoinColumn(name = "camion", referencedColumnName = "id", nullable = false)
     private CamionesModel camionesModel;
 
     @ManyToOne
-    @JoinColumn(name = "empresa", referencedColumnName = "id_emp", nullable = false)
+    @JoinColumn(name = "empresa", referencedColumnName = "id", nullable = false)
     private EmpresasModel empresasModel;
 
     private Double corriente;

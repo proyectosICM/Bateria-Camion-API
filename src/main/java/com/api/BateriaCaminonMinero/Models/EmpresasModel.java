@@ -16,8 +16,8 @@ public class EmpresasModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, nullable = false)
-    private Long id_emp;
-    private String nom_emp;
+    private Long id;
+    private String nombre;
     private Boolean estado;
 
     @JsonIgnore

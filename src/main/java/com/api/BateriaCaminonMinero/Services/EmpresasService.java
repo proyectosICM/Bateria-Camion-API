@@ -34,7 +34,7 @@ public class EmpresasService {
         Optional<EmpresasModel> existing = empresasRepository.findById(id);
         if (existing.isPresent()){
             EmpresasModel empresa = existing.get();
-            empresa.setNom_emp(empresasModel.getNom_emp());
+            empresa.setNombre(empresasModel.getNombre());
             empresa.setEstado(empresasModel.getEstado());
             return empresasRepository.save(empresa);
         } else {

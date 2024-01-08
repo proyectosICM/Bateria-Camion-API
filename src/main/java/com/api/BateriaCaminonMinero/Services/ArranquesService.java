@@ -37,16 +37,16 @@ public class ArranquesService {
 
     public List<ArranquesModel> ListarArranquexCamion(Long id){
         CamionesModel camionesModel = new CamionesModel();
-        camionesModel.setId_cam(id);
+        camionesModel.setId(id);
         return arranqueRepositories.findByCamionesModel(camionesModel);
     }
 
     public List<ArranquesModel> ListarArranqueXEmpresaYxCamion(Long empresa, Long camion){
         EmpresasModel empresasModel = new EmpresasModel();
-        empresasModel.setId_emp(empresa);
+        empresasModel.setId(empresa);
 
         CamionesModel camionesModel = new CamionesModel();
-        camionesModel.setId_cam(camion);
+        camionesModel.setId(camion);
 
         return arranqueRepositories.findByEmpresasModelAndCamionesModel(empresasModel, camionesModel);
     }
@@ -58,12 +58,12 @@ public class ArranquesService {
             if (arranquesModel.getCamionesModel() == null) {
                 arranquesModel.setCamionesModel(new CamionesModel()); // Inicializar si es null
             }
-            arranquesModel.getCamionesModel().setId_cam(camion.getId_cam());
+            arranquesModel.getCamionesModel().setId(camion.getId());
 
             if (arranquesModel.getEmpresasModel() == null) {
                 arranquesModel.setEmpresasModel(new EmpresasModel()); // Inicializar si es null
             }
-            arranquesModel.getEmpresasModel().setId_emp(camion.getEmpresasModel().getId_emp());
+            arranquesModel.getEmpresasModel().setId(camion.getEmpresasModel().getId());
 
             if (arranquesModel.getCorriente() > camion.getCorrienteArranque()) {
                 return arranqueRepositories.save(arranquesModel);

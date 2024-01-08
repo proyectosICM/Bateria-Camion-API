@@ -18,36 +18,36 @@ public class IncidenciasModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, nullable = false)
-    private Long id_inc;
+    private Long id;
 
     @Temporal(TemporalType.DATE)
     private Date dia;
 
     @Temporal(TemporalType.TIME)
     private Time hora;
-    private String nom_inc;
+    private String nombre;
 
     @ManyToOne
-    @JoinColumn(name = "bat_id", referencedColumnName = "id_bat", nullable = false)
+    @JoinColumn(name = "bateria", referencedColumnName = "id", nullable = false)
     private BateriasModels bateriasModels;
 
     @ManyToOne
-    @JoinColumn(name = "cam_id", referencedColumnName = "id_cam", nullable = false)
+    @JoinColumn(name = "camion", referencedColumnName = "id", nullable = false)
     private CamionesModel camionesModel;
 
     @ManyToOne
-    @JoinColumn(name = "conductor", referencedColumnName = "id_tra", nullable = false)
+    @JoinColumn(name = "conductor", referencedColumnName = "id", nullable = false)
     private TrabajadoresModel conductor;
 
     @ManyToOne
-    @JoinColumn(name = "revisadoBy", referencedColumnName = "id_tra", nullable = true)
+    @JoinColumn(name = "revisadoBy", referencedColumnName = "id", nullable = true)
     private TrabajadoresModel revisadoBy;
 
     @Column(nullable = true)
     private Boolean prioridad;
 
     @ManyToOne
-    @JoinColumn(name = "emp_id", referencedColumnName = "id_emp", nullable = false)
+    @JoinColumn(name = "empresa", referencedColumnName = "id", nullable = false)
     private EmpresasModel empresasModel;
 
     private Double voltaje;

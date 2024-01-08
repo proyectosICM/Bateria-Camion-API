@@ -32,7 +32,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         return new User(
                 trabajadoresModel.getUsername(),
-                trabajadoresModel.getPass_tra(),
+                trabajadoresModel.getPassword(),
                 true,
                 true,
                 true,

@@ -36,19 +36,19 @@ public class TrabajadoresService {
     }
     public List<TrabajadoresModel> ListarTrabjadorxEmpT(Long id){
         EmpresasModel empresasModel = new EmpresasModel();
-        empresasModel.setId_emp(id);
+        empresasModel.setId(id);
         return trabajadoresRepository.findByEmpresasModel(empresasModel);
     }
 
     public List<TrabajadoresModel> ListarTrabjadorxEmpH(Boolean estado, Long id){
         EmpresasModel empresasModel = new EmpresasModel();
-        empresasModel.setId_emp(id);
+        empresasModel.setId(id);
         return trabajadoresRepository.findByEstadoAndEmpresasModel(estado, empresasModel);
     }
 
     public List<TrabajadoresModel> ListarConductores(Long empresa){
         EmpresasModel empresasModel = new EmpresasModel();
-        empresasModel.setId_emp(empresa);
+        empresasModel.setId(empresa);
 
         RolesModel rolesModel = new RolesModel();
         rolesModel.setId(1L);
@@ -69,11 +69,11 @@ public class TrabajadoresService {
 
         if(existing.isPresent()){
             TrabajadoresModel trabajadores = existing.get();
-            trabajadores.setNom_tra(trabajadoresModel.getNom_tra());
-            trabajadores.setApe_tra(trabajadoresModel.getApe_tra());
-            trabajadores.setDni_tra(trabajadoresModel.getDni_tra());
+            trabajadores.setNombre(trabajadoresModel.getNombre());
+            trabajadores.setApellido(trabajadoresModel.getApellido());
+            trabajadores.setDni(trabajadoresModel.getDni());
             trabajadores.setUsername(trabajadoresModel.getUsername());
-            trabajadores.setPass_tra(passwordEncoder.encode(trabajadoresModel.getPass_tra()));
+            trabajadores.setPassword(passwordEncoder.encode(trabajadoresModel.getPassword()));
             trabajadores.setEstado(trabajadoresModel.getEstado());
             trabajadores.setEmpresasModel(trabajadoresModel.getEmpresasModel());
             trabajadores.setRolesModel(trabajadoresModel.getRolesModel());

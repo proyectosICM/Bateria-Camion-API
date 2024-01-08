@@ -25,7 +25,7 @@ public class DetalleBateriasModel {
     private Time hora;
 
     @ManyToOne
-    @JoinColumn(name = "bat_id", referencedColumnName = "id_bat", nullable = false)
+    @JoinColumn(name = "baterteria", referencedColumnName = "id", nullable = false)
     private BateriasModels bateriasModels;
     private Double voltaje;
     private Double Corriente;
