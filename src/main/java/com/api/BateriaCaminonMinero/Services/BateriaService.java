@@ -54,6 +54,19 @@ public class BateriaService {
         return null;
     }
 
+    public BateriasModels EstadosBateria(BateriasModels bateriasModels){
+        Optional<BateriasModels> existing = bateriaRepositoriy.findById(bateriasModels.getId_bat());
+        if (existing.isPresent()){
+            BateriasModels bateria = existing.get();
+            bateria.setVoltaje(bateriasModels.getVoltaje());
+            bateria.setCarga(bateriasModels.getCarga());
+            bateria.setCorriente(bateriasModels.getCorriente());
+            bateria.setTemperatura(bateriasModels.getTemperatura());
+            return bateriaRepositoriy.save(bateria);
+        }
+        return null;
+    }
+
     public void EliminarBateria(Long id){
         bateriaRepositoriy.deleteById(id);
     }

@@ -1,5 +1,6 @@
 package com.api.BateriaCaminonMinero;
 
+import com.api.BateriaCaminonMinero.Config.MQTT.MqttSubscriber;
 import com.api.BateriaCaminonMinero.Models.ERole;
 import com.api.BateriaCaminonMinero.Models.EmpresasModel;
 import com.api.BateriaCaminonMinero.Models.RolesModel;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -21,7 +23,12 @@ import java.util.Set;
 public class BateriaCaminonMineroApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(BateriaCaminonMineroApplication.class, args);
+		//  S
+		//  pringApplication.run(BateriaCaminonMineroApplication.class, args);
+		ApplicationContext context = SpringApplication.run(BateriaCaminonMineroApplication.class, args);
+		MqttSubscriber mqttSubscriber = context.getBean(MqttSubscriber.class);
+		// Llama a subscribeToTopic en la instancia
+		mqttSubscriber.subscribeToTopic("prueba");
 	}
 
 	@Bean

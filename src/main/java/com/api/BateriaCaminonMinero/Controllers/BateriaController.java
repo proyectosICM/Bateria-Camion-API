@@ -67,6 +67,15 @@ public class BateriaController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    @PutMapping("estado-bateria")
+    public ResponseEntity<BateriasModels> EstadoBaterias(@RequestBody BateriasModels bateriasModels){
+        BateriasModels ebateria = bateriaService.EstadosBateria(bateriasModels);
+        if (ebateria != null) {
+            return new ResponseEntity<>(ebateria, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<BateriasModels> DCam(@PathVariable Long id){
         bateriaService.EliminarBateria(id);
