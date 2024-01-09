@@ -54,4 +54,12 @@
             Date dia = detalleBateriasModel.getDia();
             return detalleBateriasRepository.findByBateriasModelsAndDia(id,dia);
         }
+
+        public Optional<DetalleBateriasModel> ListarporId(Long id){
+            return detalleBateriasRepository.findById(id);
+        }
+
+        public DetalleBateriasModel CrearR(DetalleBateriasModel detalleBateriasModel){
+            return detalleBateriasRepository.save(detalleBateriasModel);
+        }
     }

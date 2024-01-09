@@ -13,6 +13,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("api/detalles")
@@ -104,9 +105,24 @@ public class DetalleBateriasController {
         return detalleBateriasService.ListarDetallexD(dia);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<DetalleBateriasModel> buscarPorId(@PathVariable Long id){
+        Optional<DetalleBateriasModel> data = detalleBateriasService.ListarporId(id);
+        if(data.isPresent()){
+            return new ResponseEntity<>(data.get(), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
     @PostMapping("diab/{id}")
     public ResponseEntity<DetalleBateriasModel> ListarDBateriaxDia(@PathVariable Long id, @RequestBody DetalleBateriasModel detalleBateriasModel ) {
         DetalleBateriasModel deta = detalleBateriasService.ListarDBateriaxDia(id, detalleBateriasModel);
         return new ResponseEntity<>(deta, HttpStatus.OK);
+    }
+
+    @PostMapping
+    public ResponseEntity<DetalleBateriasModel>Crear(@RequestBody DetalleBateriasModel detalleBateriasModel){
+        DetalleBateriasModel cdetalle = detalleBateriasService.CrearR(detalleBateriasModel);
+        return new ResponseEntity<>(cdetalle, HttpStatus.OK);
     }
 }

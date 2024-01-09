@@ -31,6 +31,6 @@ public class DetalleBateriasModel {
     private Double Corriente;
     private Integer carga;
     private Double temperatura;
-    private Boolean est_dc;
+    private Boolean estado;
 
 }
