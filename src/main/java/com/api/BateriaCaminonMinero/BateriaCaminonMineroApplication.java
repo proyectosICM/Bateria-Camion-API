@@ -1,23 +1,19 @@
 package com.api.BateriaCaminonMinero;
 
-import com.api.BateriaCaminonMinero.Config.MQTT.MqttSubscriber;
-import com.api.BateriaCaminonMinero.Repositories.TrabajadoresRepository;
+import com.api.BateriaCaminonMinero.mqtt.MqttSubscriber;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.info.License;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 @SpringBootApplication
 public class BateriaCaminonMineroApplication {
 
 	public static void main(String[] args) {
-		//  S
-		//  pringApplication.run(BateriaCaminonMineroApplication.class, args);
+		//  SpringApplication.run(BateriaCaminonMineroApplication.class, args);
 		ApplicationContext context = SpringApplication.run(BateriaCaminonMineroApplication.class, args);
 		MqttSubscriber mqttSubscriber = context.getBean(MqttSubscriber.class);
 		// Llama a subscribeToTopic en la instancia
@@ -35,13 +31,13 @@ public class BateriaCaminonMineroApplication {
 						.license(new License().name("Apache").url("http://springdoc.org"))
 				);
 	}
-
+/*
 	@Autowired
 	PasswordEncoder passwordEncoder;
 
 	@Autowired
 	TrabajadoresRepository trabajadoresRepository;
-/*
+
 	@Bean
 	CommandLineRunner init(){
 		return args -> {

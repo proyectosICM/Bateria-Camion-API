@@ -15,7 +15,9 @@ public class CamionesModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, nullable = false)
     private Long id;
+
     private String placa;
+
     @ManyToOne
     @JoinColumn(name = "empresa", referencedColumnName = "id", nullable = false)
     private EmpresasModel empresasModel;

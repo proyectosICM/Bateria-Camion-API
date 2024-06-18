@@ -1,4 +1,4 @@
-package com.api.BateriaCaminonMinero.Config.MQTT;
+package com.api.BateriaCaminonMinero.mqtt;
 
 
 import com.api.BateriaCaminonMinero.Models.BateriasModels;

@@ -1,4 +1,4 @@
-package com.api.BateriaCaminonMinero.Config.MQTT;
+package com.api.BateriaCaminonMinero.mqtt;
 
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;

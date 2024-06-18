@@ -14,30 +14,27 @@ import java.util.Optional;
 @Service
 public class CamionesService {
     @Autowired
-    CamionesRepository camionesRepository;
+    private CamionesRepository camionesRepository;
 
     public List<CamionesModel> ListarCamiones(){
         return camionesRepository.findAll();
     }
-    //Listar camion asociado a un conductor
+
+    public List<CamionesModel>ListarCamionesxEmpresa(EmpresasModel empresasModel){
+        return camionesRepository.findByEmpresasModel(empresasModel);
+    }
+
     public Optional<CamionesModel> ListarCamionxTrabajador(Long id){
         TrabajadoresModel trabajadoresModel = new TrabajadoresModel();
         trabajadoresModel.setId(id);
         return camionesRepository.findByTrabajadoresModel(trabajadoresModel);
     }
 
-
-
-
     public Optional<CamionesModel> ListarCamionId(Long id){
         return camionesRepository.findById(id);
     }
     public List<CamionesModel>ListarCamionesxEmpresaEst(EmpresasModel empresasModel, Boolean estado){
         return camionesRepository.findByEmpresasModelAndEstado(empresasModel, estado);
-    }
-
-    public List<CamionesModel>ListarCamionesxEmpresa(EmpresasModel empresasModel){
-        return camionesRepository.findByEmpresasModel(empresasModel);
     }
 
 

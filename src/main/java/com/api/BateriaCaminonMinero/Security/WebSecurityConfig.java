@@ -4,6 +4,7 @@ import com.api.BateriaCaminonMinero.Security.filters.JwtAuthenticationFilter;
 import com.api.BateriaCaminonMinero.Security.filters.JwtAuthorizationFilter;
 import com.api.BateriaCaminonMinero.Security.jwt.JwtUtils;
 import com.api.BateriaCaminonMinero.Services.UserDetailsServiceImpl;
+import com.api.BateriaCaminonMinero.config.WebConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -47,7 +48,8 @@ public class WebSecurityConfig {
                 "http://192.168.1.232",
                 "http://192.168.1.232:3000",
                 "http://192.168.1.158",         // Agrega esta URL
-                "http://192.168.1.158:19000",   // Agrega esta URL
+                "http://192.168.1.158:19000",
+                 // Agrega esta URL
                 "http://192.168.1.158:3000",
                 "http://192.168.1.35",
                 "http://192.168.1.35:3000"
