@@ -21,6 +21,6 @@ public interface CamionesRepository extends JpaRepository<CamionesModel, Long> {
 
 
     /** Reformulado **/
-    List<CamionesModel> findByEmpresasModel(EmpresasModel empresasModel);
-    Page<CamionesModel> findByEmpresasModel(EmpresasModel empresasModel, Pageable pageable);
+    List<CamionesModel> findByEmpresasModelId(Long empresaId);
+    Page<CamionesModel> findByEmpresasModelId(Long empresaId, Pageable pageable);
 }

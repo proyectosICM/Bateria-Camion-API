@@ -19,25 +19,27 @@ public class BateriaController {
     BateriaService bateriaService;
 
     @GetMapping
-    public List<BateriasModels> Getall(){
-        return bateriaService.ListarBaterias();
+    public List<BateriasModels> findAll(){
+        return bateriaService.findAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<BateriasModels> GetById(@PathVariable Long id){
-        Optional<BateriasModels> bateria = bateriaService.ListarBateriaId(id);
+    public ResponseEntity<BateriasModels> findById(@PathVariable Long id){
+        Optional<BateriasModels> bateria = bateriaService.findById(id);
         if (bateria.isPresent()){
             return new ResponseEntity<>(bateria.get(), HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping("/camiones/{id}")
-    public List<BateriasModels> buscarBateriasPorCamionesModel(@PathVariable Long id) {
-        CamionesModel camionesModel = new CamionesModel();
-        camionesModel.setId(id);
-        return bateriaService.buscarBateriasPorCamionesModel(camionesModel);
+    @GetMapping("/camion/{id}")
+    public List<BateriasModels> findByCamionesModelId(@PathVariable Long id) {
+        return bateriaService.findByCamionesModelId(id);
     }
+    /** **/
+
+
+
 
     @GetMapping("/bateriaxemp/{id}")
     public List<BateriasModels> buscarBateriasPorCamionesModel2(@PathVariable Long id) {

@@ -5,6 +5,9 @@ import com.api.BateriaCaminonMinero.Models.EmpresasModel;
 import com.api.BateriaCaminonMinero.Models.IncidenciasModel;
 import com.api.BateriaCaminonMinero.Services.CamionesService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,18 +22,35 @@ public class CamionesController {
     CamionesService camionesService;
 
     @GetMapping
-    public List<CamionesModel> Getall(){
-        return camionesService.ListarCamiones();
+    public List<CamionesModel> findAll(){
+        return camionesService.findAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CamionesModel> GetById(@PathVariable Long id){
-        Optional<CamionesModel> camiones = camionesService.ListarCamionId(id);
+    public ResponseEntity<CamionesModel> findById(@PathVariable Long id){
+        Optional<CamionesModel> camiones = camionesService.findById(id);
         if (camiones.isPresent()){
             return new ResponseEntity<>(camiones.get(), HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+
+    @GetMapping("/empresa/{id}")
+    public List<CamionesModel> findByEmpresasModelId(@PathVariable Long id){
+        return camionesService.findByEmpresasModelId(id);
+    }
+
+    @GetMapping("/empresa-page/{id}")
+    public Page<CamionesModel> findByEmpresasModelId(@PathVariable Long id,
+                                         @RequestParam (defaultValue = "0") int page,
+                                         @RequestParam (defaultValue = "8") int size){
+        Pageable pageable = PageRequest.of(page, size);
+        return camionesService.findByEmpresasModelId(id, pageable);
+    }
+
+    /* */
+
+
 
     //Listar camion asociado a un conductor
     @GetMapping("camionxtrabajador/{id}")
@@ -49,12 +69,7 @@ public class CamionesController {
         return camionesService.ListarCamionesxEmpresaEst(empresa, estado);
     }
 
-    @GetMapping("camxemp/{id}")
-    public List<CamionesModel> GetCamEmp(@PathVariable Long id){
-        EmpresasModel empresa = new EmpresasModel();
-        empresa.setId(id);
-        return camionesService.ListarCamionesxEmpresa((empresa));
-    }
+
 
     @PostMapping
     public ResponseEntity<CamionesModel> CCam(@RequestBody CamionesModel camionesModel){

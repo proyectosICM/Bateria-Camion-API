@@ -6,6 +6,8 @@ import com.api.BateriaCaminonMinero.Models.IncidenciasModel;
 import com.api.BateriaCaminonMinero.Models.TrabajadoresModel;
 import com.api.BateriaCaminonMinero.Repositories.CamionesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,13 +18,23 @@ public class CamionesService {
     @Autowired
     private CamionesRepository camionesRepository;
 
-    public List<CamionesModel> ListarCamiones(){
+    public List<CamionesModel> findAll(){
         return camionesRepository.findAll();
     }
 
-    public List<CamionesModel>ListarCamionesxEmpresa(EmpresasModel empresasModel){
-        return camionesRepository.findByEmpresasModel(empresasModel);
+    public Optional<CamionesModel> findById(Long id){
+        return camionesRepository.findById(id);
     }
+
+    public List<CamionesModel>findByEmpresasModelId(Long empresaId){
+        return camionesRepository.findByEmpresasModelId(empresaId);
+    }
+
+    public Page<CamionesModel> findByEmpresasModelId(Long empresaId, Pageable pageable){
+        return camionesRepository.findByEmpresasModelId(empresaId, pageable);
+    }
+
+    /* */
 
     public Optional<CamionesModel> ListarCamionxTrabajador(Long id){
         TrabajadoresModel trabajadoresModel = new TrabajadoresModel();
@@ -30,9 +42,7 @@ public class CamionesService {
         return camionesRepository.findByTrabajadoresModel(trabajadoresModel);
     }
 
-    public Optional<CamionesModel> ListarCamionId(Long id){
-        return camionesRepository.findById(id);
-    }
+
     public List<CamionesModel>ListarCamionesxEmpresaEst(EmpresasModel empresasModel, Boolean estado){
         return camionesRepository.findByEmpresasModelAndEstado(empresasModel, estado);
     }

@@ -58,8 +58,8 @@ public class WebSecurityConfig {
 
         configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
 
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT")); // Especificar los métodos HTTP permitidos
-        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type")); // Especificar los encabezados permitidos
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT"));
+        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
         configuration.setAllowCredentials(true); // Permitir el envío de credenciales
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
@@ -93,11 +93,6 @@ public class WebSecurityConfig {
                 .logout().disable()  // Deshabilitar la funcionalidad de logout
                 .exceptionHandling().disable()
                 .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("/hola").permitAll();
-                    auth.requestMatchers("/api/camiones").permitAll();
-                    auth.requestMatchers("/unprotected").permitAll();
-                    auth.requestMatchers("/unprotected").permitAll();
-                    auth.requestMatchers("/redirigido").permitAll();
                     auth.requestMatchers("/api/imagen/**").permitAll();
                     auth.requestMatchers("/saludof").permitAll();
                     auth.requestMatchers("/get-ip").permitAll();

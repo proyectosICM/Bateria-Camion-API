@@ -14,11 +14,22 @@ import java.util.Optional;
 @Service
 public class BateriaService {
     @Autowired
-    BateriaRepositoriy bateriaRepositoriy;
+    private BateriaRepositoriy bateriaRepositoriy;
 
-    public List<BateriasModels> buscarBateriasPorCamionesModel(CamionesModel camionesModel) {
-        return bateriaRepositoriy.findByCamionesModel(camionesModel);
+    public List<BateriasModels> findAll(){
+        return bateriaRepositoriy.findAll();
     }
+
+    public Optional<BateriasModels> findById(Long id){
+        return bateriaRepositoriy.findById(id);
+    }
+
+    public List<BateriasModels> findByCamionesModelId(Long camionId) {
+        return bateriaRepositoriy.findByCamionesModelId(camionId);
+    }
+
+    /** **/
+
 
     public List<BateriasModels> ListarBateriaxEmp(EmpresasModel empresasModel){
         return bateriaRepositoriy.findByEmpresasModel(empresasModel);
@@ -26,13 +37,8 @@ public class BateriaService {
     public List<BateriasModels> ListarBateriaxEmpEst(EmpresasModel empresasModel, Boolean estado){
         return bateriaRepositoriy.findByEmpresasModelAndEstado(empresasModel, estado);
     }
-    public List<BateriasModels> ListarBaterias(){
-        return bateriaRepositoriy.findAll();
-    }
 
-    public Optional<BateriasModels> ListarBateriaId(Long id){
-        return bateriaRepositoriy.findById(id);
-    }
+
 
     public BateriasModels CrearBateria(BateriasModels bateriasModels){
         return bateriaRepositoriy.save(bateriasModels);
