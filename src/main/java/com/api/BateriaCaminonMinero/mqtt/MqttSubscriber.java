@@ -1,9 +1,9 @@
 package com.api.BateriaCaminonMinero.mqtt;
 
 
-import com.api.BateriaCaminonMinero.Models.BateriasModels;
-import com.api.BateriaCaminonMinero.Repositories.BateriaRepositoriy;
-import com.api.BateriaCaminonMinero.Services.BateriaService;
+import com.api.BateriaCaminonMinero.models.BateriasModels;
+import com.api.BateriaCaminonMinero.repositories.BateriaRepositoriy;
+import com.api.BateriaCaminonMinero.services.BateriaService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.eclipse.paho.client.mqttv3.IMqttClient;
