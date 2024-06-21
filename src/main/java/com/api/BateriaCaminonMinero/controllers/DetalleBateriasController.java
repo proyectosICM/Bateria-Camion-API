@@ -4,21 +4,48 @@ import com.api.BateriaCaminonMinero.models.*;
 import com.api.BateriaCaminonMinero.response.DetalleBateriaYearResponse;
 import com.api.BateriaCaminonMinero.services.DetalleBateriasService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 @RequestMapping("api/detalles")
 public class DetalleBateriasController {
     @Autowired
-    DetalleBateriasService detalleBateriasService;
+    private DetalleBateriasService detalleBateriasService;
+
+    @GetMapping("/bateria/{id}")
+    public List<DetalleBateriasModel> findByBateriasModelId(@PathVariable("id") Long id){
+        return detalleBateriasService.findByBateriasModelId(id);
+    }
+
+    @GetMapping("/bateria-page/{id}")
+    public Page<DetalleBateriasModel> findByBateriasModelId(@PathVariable("id") Long id,
+                                                            @RequestParam(defaultValue = "0") int page,
+                                                            @RequestParam(defaultValue = "10") int size){
+        Pageable pageable = PageRequest.of(page, size);
+        return detalleBateriasService.findByBateriasModelId(id, pageable);
+    }
+
+    @GetMapping("/promedios-horarios/{bateriaId}")
+    public ResponseEntity<List<Map<String, Object>>> getHourlyAveragesForToday(@PathVariable Long bateriaId) {
+        List<Map<String, Object>> result = detalleBateriasService.getHourlyAveragesForToday(bateriaId);
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("/promedios-diarios/{bateriaId}")
+    public ResponseEntity<List<Map<String, Object>>> getDailyAverages(@PathVariable Long bateriaId) {
+        List<Map<String, Object>> promediosDiarios = detalleBateriasService.getDailyAverages(bateriaId);
+        return ResponseEntity.ok(promediosDiarios);
+    }
+
+    /** **/
     @GetMapping("/promedioxmes/{bateria}")
     public List<DetalleBateriaYearResponse> arranquesxmes2(@PathVariable Long bateria) {
         List<Object[]> result = detalleBateriasService.PromedioBateria(bateria);
@@ -89,16 +116,13 @@ public class DetalleBateriasController {
         return detalleBateriasService.ListarDetalles();
     }
 
-    @GetMapping("bateriaxdetalle/{bateria}")
-    public List<DetalleBateriasModel> GetBatxDet(@PathVariable("bateria") Long bateria){
-        return detalleBateriasService.ListarBateriaxDetalle(bateria);
-    }
 
+/*
     @GetMapping("dia/{id}")
     public List<DetalleBateriasModel> obtenerRegistrosPorDia(@PathVariable Long id) {
         return detalleBateriasService.ListarDetallexDia(id);
     }
-
+*/
     @GetMapping("d/{dia}")
     public List<DetalleBateriasModel> obtenerRegistrosD(@PathVariable Date dia) {
         return detalleBateriasService.ListarDetallexD(dia);
@@ -112,16 +136,16 @@ public class DetalleBateriasController {
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
-
+/*
     @PostMapping("diab/{id}")
     public ResponseEntity<DetalleBateriasModel> ListarDBateriaxDia(@PathVariable Long id, @RequestBody DetalleBateriasModel detalleBateriasModel ) {
         DetalleBateriasModel deta = detalleBateriasService.ListarDBateriaxDia(id, detalleBateriasModel);
         return new ResponseEntity<>(deta, HttpStatus.OK);
     }
-
+*/
     @PostMapping
     public ResponseEntity<DetalleBateriasModel>Crear(@RequestBody DetalleBateriasModel detalleBateriasModel){
         DetalleBateriasModel cdetalle = detalleBateriasService.CrearR(detalleBateriasModel);
-        return new ResponseEntity<>(cdetalle, HttpStatus.OK);
+        return new ResponseEntity<>(cdetalle, HttpStatus.CREATED);
     }
 }

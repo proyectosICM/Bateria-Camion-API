@@ -1,7 +1,7 @@
 package com.api.BateriaCaminonMinero.services;
 
 import com.api.BateriaCaminonMinero.dto.BateriaStatsResponse;
-import com.api.BateriaCaminonMinero.models.BateriasModels;
+import com.api.BateriaCaminonMinero.models.BateriasModel;
 import com.api.BateriaCaminonMinero.models.EmpresasModel;
 import com.api.BateriaCaminonMinero.repositories.BateriaRepositoriy;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,16 +16,24 @@ public class BateriaService {
     @Autowired
     private BateriaRepositoriy bateriaRepositoriy;
 
-    public List<BateriasModels> findAll(){
+    public Optional<BateriasModel> findByNombre(String nombre) {
+        return bateriaRepositoriy.findByNombre(nombre);
+    }
+
+    public List<BateriasModel> findAll(){
         return bateriaRepositoriy.findAll();
     }
 
-    public Optional<BateriasModels> findById(Long id){
+    public Optional<BateriasModel> findById(Long id){
         return bateriaRepositoriy.findById(id);
     }
 
-    public List<BateriasModels> findByCamionesModelId(Long camionId) {
+    public List<BateriasModel> findByCamionesModelId(Long camionId) {
         return bateriaRepositoriy.findByCamionesModelId(camionId);
+    }
+
+    public List<BateriasModel> findByEmpresasModelId(Long empresaId){
+        return bateriaRepositoriy.findByEmpresasModelId(empresaId);
     }
 
     public BateriaStatsResponse getBateriaStatsByCamionId(Long camionId) {
@@ -45,43 +53,41 @@ public class BateriaService {
     /** **/
 
 
-    public List<BateriasModels> ListarBateriaxEmp(EmpresasModel empresasModel){
-        return bateriaRepositoriy.findByEmpresasModel(empresasModel);
-    }
-    public List<BateriasModels> ListarBateriaxEmpEst(EmpresasModel empresasModel, Boolean estado){
+
+    public List<BateriasModel> ListarBateriaxEmpEst(EmpresasModel empresasModel, Boolean estado){
         return bateriaRepositoriy.findByEmpresasModelAndEstado(empresasModel, estado);
     }
 
 
 
-    public BateriasModels CrearBateria(BateriasModels bateriasModels){
-        return bateriaRepositoriy.save(bateriasModels);
+    public BateriasModel CrearBateria(BateriasModel bateriasModel){
+        return bateriaRepositoriy.save(bateriasModel);
     }
 
-    public BateriasModels EditarBateria(BateriasModels bateriasModels, Long id){
-        Optional<BateriasModels> existing = bateriaRepositoriy.findById(id);
+    public BateriasModel EditarBateria(BateriasModel bateriasModel, Long id){
+        Optional<BateriasModel> existing = bateriaRepositoriy.findById(id);
         if(existing.isPresent()){
-            BateriasModels bateria = existing.get();
-            bateria.setNombre(bateriasModels.getNombre());
-            bateria.setEstado(bateriasModels.getEstado());
-            bateria.setCamionesModel(bateriasModels.getCamionesModel());
-            bateria.setVoltaje(bateriasModels.getVoltaje());
-            bateria.setCarga(bateriasModels.getCarga());
-            bateria.setCorriente(bateriasModels.getCorriente());
-            bateria.setTemperatura(bateriasModels.getTemperatura());
+            BateriasModel bateria = existing.get();
+            bateria.setNombre(bateriasModel.getNombre());
+            bateria.setEstado(bateriasModel.getEstado());
+            bateria.setCamionesModel(bateriasModel.getCamionesModel());
+            bateria.setVoltaje(bateriasModel.getVoltaje());
+            bateria.setCarga(bateriasModel.getCarga());
+            bateria.setCorriente(bateriasModel.getCorriente());
+            bateria.setTemperatura(bateriasModel.getTemperatura());
             return bateriaRepositoriy.save(bateria);
         }
         return null;
     }
 
-    public BateriasModels EstadosBateria(BateriasModels bateriasModels){
-        Optional<BateriasModels> existing = bateriaRepositoriy.findById(bateriasModels.getId());
+    public BateriasModel EstadosBateria(BateriasModel bateriasModel){
+        Optional<BateriasModel> existing = bateriaRepositoriy.findById(bateriasModel.getId());
         if (existing.isPresent()){
-            BateriasModels bateria = existing.get();
-            bateria.setVoltaje(bateriasModels.getVoltaje());
-            bateria.setCarga(bateriasModels.getCarga());
-            bateria.setCorriente(bateriasModels.getCorriente());
-            bateria.setTemperatura(bateriasModels.getTemperatura());
+            BateriasModel bateria = existing.get();
+            bateria.setVoltaje(bateriasModel.getVoltaje());
+            bateria.setCarga(bateriasModel.getCarga());
+            bateria.setCorriente(bateriasModel.getCorriente());
+            bateria.setTemperatura(bateriasModel.getTemperatura());
             return bateriaRepositoriy.save(bateria);
         }
         return null;
@@ -91,10 +97,10 @@ public class BateriaService {
         bateriaRepositoriy.deleteById(id);
     }
 
-    public BateriasModels DeshabilitarBateria(BateriasModels bateriasModels, Long id){
-        Optional<BateriasModels> existing = bateriaRepositoriy.findById(id);
+    public BateriasModel DeshabilitarBateria(BateriasModel bateriasModel, Long id){
+        Optional<BateriasModel> existing = bateriaRepositoriy.findById(id);
         if (existing.isPresent()){
-            BateriasModels bateria = existing.get();
+            BateriasModel bateria = existing.get();
             bateria.setEstado(false);
             bateria.setCamionesModel(null);
             return bateriaRepositoriy.save(bateria);

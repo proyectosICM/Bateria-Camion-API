@@ -94,9 +94,7 @@ public class WebSecurityConfig {
                 .exceptionHandling().disable()
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/api/imagen/**").permitAll();
-                    auth.requestMatchers("/saludof").permitAll();
-                    auth.requestMatchers("/get-ip").permitAll();
-                    auth.requestMatchers("/login").permitAll();
+                    auth.requestMatchers("/api/baterias/**").permitAll();
                     auth.requestMatchers("/swagger-ui/**").permitAll();
                     auth.requestMatchers("/doc/**").permitAll();
                     auth.requestMatchers("/swagger-ui.html").permitAll();

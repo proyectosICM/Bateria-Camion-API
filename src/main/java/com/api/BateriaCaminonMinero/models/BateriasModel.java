@@ -10,12 +10,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity
 @Table(name = "Baterias")
-public class BateriasModels {
+public class BateriasModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, nullable = false)
     private Long id;
+
     private String nombre;
+
     private Boolean estado;
 
     @ManyToOne
@@ -23,8 +25,11 @@ public class BateriasModels {
     private CamionesModel camionesModel;
 
     private Double voltaje;
+
     private Double corriente;
+
     private Integer carga;
+
     private Double temperatura;
 
     @ManyToOne

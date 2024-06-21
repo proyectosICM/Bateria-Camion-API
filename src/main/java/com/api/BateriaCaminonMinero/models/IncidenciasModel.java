@@ -29,7 +29,7 @@ public class IncidenciasModel {
 
     @ManyToOne
     @JoinColumn(name = "bateria", referencedColumnName = "id", nullable = false)
-    private BateriasModels bateriasModels;
+    private BateriasModel bateriasModel;
 
     @ManyToOne
     @JoinColumn(name = "camion", referencedColumnName = "id", nullable = false)

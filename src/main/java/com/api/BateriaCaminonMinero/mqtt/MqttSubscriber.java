@@ -1,7 +1,7 @@
 package com.api.BateriaCaminonMinero.mqtt;
 
 
-import com.api.BateriaCaminonMinero.models.BateriasModels;
+import com.api.BateriaCaminonMinero.models.BateriasModel;
 import com.api.BateriaCaminonMinero.repositories.BateriaRepositoriy;
 import com.api.BateriaCaminonMinero.services.BateriaService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -51,10 +51,10 @@ public class MqttSubscriber {
                     ObjectMapper objectMapper = new ObjectMapper();
 
                     try {
-                        BateriasModels bateriasModels = objectMapper.readValue(payload, BateriasModels.class);
+                        BateriasModel bateriasModel = objectMapper.readValue(payload, BateriasModel.class);
 
                         // Guarda el objeto en la base de datos utilizando el servicio
-                        bateriaService.EstadosBateria(bateriasModels);
+                        bateriaService.EstadosBateria(bateriasModel);
                     } catch (JsonProcessingException e) {
                         System.err.println("Error al deserializar el JSON: " + e.getMessage());
                     }

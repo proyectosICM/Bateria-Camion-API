@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Time;
+import java.time.LocalDate;
 import java.util.Date;
 @Data
 @NoArgsConstructor
@@ -19,18 +20,23 @@ public class DetalleBateriasModel {
     private Long id;
 
     @Temporal(TemporalType.DATE)
-    private Date dia;
+    private LocalDate dia;
 
     @Temporal(TemporalType.TIME)
     private Time hora;
 
     @ManyToOne
-    @JoinColumn(name = "baterteria", referencedColumnName = "id", nullable = false)
-    private BateriasModels bateriasModels;
+    @JoinColumn(name = "bateria", referencedColumnName = "id", nullable = false)
+    private BateriasModel bateriasModel;
+
     private Double voltaje;
+
     private Double Corriente;
+
     private Integer carga;
+
     private Double temperatura;
+
     private Boolean estado;
 
 }
