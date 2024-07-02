@@ -47,7 +47,7 @@ public interface DetalleBateriasRepository extends JpaRepository<DetalleBaterias
             "YEAR(d.dia) AS year, " +
             "MONTH(d.dia) AS month, " +
             "AVG(d.voltaje) AS voltajePromedio, " +
-            "AVG(d.corriente) AS corrientePromedio, " +
+            "AVG(d.Corriente) AS corrientePromedio, " +
             "AVG(d.carga) AS cargaPromedio, " +
             "AVG(d.temperatura) AS temperaturaPromedio " +
             "FROM DetalleBateriasModel d " +
